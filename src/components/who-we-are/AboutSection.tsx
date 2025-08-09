@@ -28,7 +28,7 @@ export default function AboutSection() {
           className="relative w-full h-72 rounded-xl overflow-hidden shadow-md"
         >
           <Image
-            src="/images/who-we-are.jpg"
+            src="/images/who-we-are.JPG"
             alt="ICF About Us"
             fill
             className="object-cover hover:scale-105 transition-transform duration-700"

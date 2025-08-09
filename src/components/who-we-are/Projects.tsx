@@ -7,12 +7,12 @@ const projects = [
   {
     title: 'Walk in Their Shoes',
     desc: 'A campaign supporting out-of-school children across Nigeria through a digital crowdfunding initiative. Over 800 scholarships awarded.',
-    img: '/images/projects/wits.jpg',
+    img: '/images/projects/wits.JPG',
   },
   {
     title: 'Community Cluster Learning Model (CCLM)',
     desc: 'Providing basic literacy, vocational training, and financial inclusion strategies for underserved communities, including Fulani and IDP camps.',
-    img: '/images/projects/cclm.jpg',
+    img: '/images/projects/cclm.JPG',
   },
   {
     title: 'Training, Advocacy, Research, Mentorship (TARM)',
@@ -22,17 +22,17 @@ const projects = [
   {
     title: 'DIGITSGALS',
     desc: 'Equipping female students in public schools with essential digital skills through NITDA partnerships.',
-    img: '/images/projects/digitsgals.jpg',
+    img: '/images/projects/digitsgals.JPG',
   },
   {
     title: 'Ambassador Special Self-Help (ASSH)',
     desc: 'Supporting vulnerable Fulani groups through dairy production training, financial literacy, and sustainable livelihoods.',
-    img: '/images/projects/assh.jpg',
+    img: '/images/projects/assh.JPG',
   },
   {
     title: 'Adolescent Safety in all Spaces (ASIS)',
     desc: 'Addressing gender-based violence in schools and online, creating safe learning environments for adolescent girls.',
-    img: '/images/projects/asis.jpg',
+    img: '/images/projects/asis.JPG',
   },
 ];
 
