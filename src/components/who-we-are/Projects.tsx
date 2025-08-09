@@ -12,7 +12,7 @@ const projects = [
   {
     title: 'Community Cluster Learning Model (CCLM)',
     desc: 'Providing basic literacy, vocational training, and financial inclusion strategies for underserved communities, including Fulani and IDP camps.',
-    img: '/images/projects/cclm.JPG',
+    img: '/images/projects/cclm.jpg',
   },
   {
     title: 'Training, Advocacy, Research, Mentorship (TARM)',
