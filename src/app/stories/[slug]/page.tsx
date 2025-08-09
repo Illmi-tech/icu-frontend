@@ -9,7 +9,7 @@ const mockStories: Story[] = [
     title: 'Back-to-School Support',
     excerpt: 'Short description...',
     content: 'Full detailed content for back-to-school support...',
-    image: '/stories/story1.jpg',
+    image: '/stories/story1.JPG',
     createdAt: '2025-08-01',
   },
   {
@@ -17,7 +17,7 @@ const mockStories: Story[] = [
     title: 'Community Literacy Program',
     excerpt: 'We launched free literacy classes in underserved rural communities.',
     content: 'Full detailed content for Community Literacy Program...',
-    image: '/stories/story3.jpg',
+    image: '/stories/story3.JPG',
     createdAt: '2025-07-10',
   },
 ];

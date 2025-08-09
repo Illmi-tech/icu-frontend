@@ -8,25 +8,25 @@ const stories = [
     title: "Back-to-School Support",
     description:
       "ICF helped 50 children return to school with supplies, uniforms, and fees covered.",
-    image: "/stories/story1.jpg",
+    image: "/stories/story1.JPG",
   },
   {
     title: "Women Household Support Program",
     description:
       "We provided household essentials for women in rural communities to improve their living conditions.",
-    image: "/stories/story2.jpg",
+    image: "/stories/story2.JPG",
   },
   {
     title: "Community Literacy Program",
     description:
       "We launched free literacy classes in underserved rural communities.",
-    image: "/stories/story3.jpg",
+    image: "/stories/story3.JPG",
   },
   {
     title: "Safe Space for Girls",
     description:
       "Our new safe space provides mentorship and protection for girls facing abuse.",
-    image: "/stories/story4.jpg",
+    image: "/stories/story4.JPG",
   },
 ];
 

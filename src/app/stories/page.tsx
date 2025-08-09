@@ -13,7 +13,7 @@ const mockStories: Story[] = [
     title: 'Back-to-School Support',
     excerpt: 'ICF helped 50 children return to school with supplies, uniforms, and fees covered.',
     content: 'Full story goes here...',
-    image: '/stories/story1.jpg',
+    image: '/stories/story1.JPG',
     createdAt: '2025-08-01',
   },
   {
@@ -21,7 +21,7 @@ const mockStories: Story[] = [
     title: 'Community Literacy Program',
     excerpt: 'We launched free literacy classes in underserved rural communities.',
     content: 'Full story goes here...',
-    image: '/stories/story3.jpg',
+    image: '/stories/story3.JPG',
     createdAt: '2025-07-10',
   },
 ];
