@@ -7,13 +7,19 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Who We Are", href: "/who-we-are" },
+  { label: "Who We Are", href: "/who-we-are",
+    children: [                               
+      { label: "About Us", href: "/who-we-are" },
+      { label: "Team", href: "/who-we-are/team" },
+    ]
+
+  },
   {
     label: "Our Stories",
     href: "/stories",
     children: [
-      { label: "Blogs", href: "/stories/blogs" },
-      { label: "Resources", href: "/stories/resources" },
+      { label: "Blogs", href: "/blogs" },
+      { label: "Resources", href: "/resources" },
     ],
   },
   { label: "Donate", href: "/donate" },

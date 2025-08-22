@@ -1,4 +1,4 @@
-// src/app/stories/[slug]/page.tsx
+// src/app/blogs/[slug]/page.tsx
 import { notFound } from 'next/navigation';
 import type { Story } from '@/types/story';
 import Image from 'next/image';

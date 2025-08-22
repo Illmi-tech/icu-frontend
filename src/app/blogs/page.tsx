@@ -61,7 +61,7 @@ export default function StoriesPage() {
                 transition={{ delay: i * 0.1 }}
                 className="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition"
               >
-                <Link href={`/stories/${story.slug}`}>
+                <Link href={`/blogs/${story.slug}`}>
                     <Image
                         src={story.image}
                         alt={story.title}
