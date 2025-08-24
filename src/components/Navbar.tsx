@@ -7,10 +7,21 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Who We Are", href: "/who-we-are",
+  { label: "Who We Are", href: "/about-us",
     children: [                               
-      { label: "About Us", href: "/who-we-are" },
-      { label: "Team", href: "/who-we-are/team" },
+      { label: "About Us", href: "/about-us" },
+      { label: "Team", href: "/team" },
+    ]
+
+  },
+  { label: "Our Projects", href: "/our-projects/cclm",
+    children: [                               
+      { label: "CCLM", href: "/our-projects/cclm" },
+      { label: "Walk in Their Shoes", href: "/our-projects/wits" },
+      { label: "TARM", href: "/our-projects/tarm" },
+      { label: "Digitgals", href: "/our-projects/digitgals" },
+      { label: "ASSH", href: "/our-projects/assh" },
+      { label: "ASIS", href: "/our-projects/asis" }
     ]
 
   },
@@ -22,6 +33,25 @@ const navLinks = [
       { label: "Resources", href: "/resources" },
     ],
   },
+  { label: "Scholarships", href: "/scholarships" },
+  {
+    label: "Opportunities",
+    href: "/opportunities/careers",
+    children: [
+      { label: "Careers", href: "/opportunities/careers" },
+      { label: "Become Our Volunteer", href: "/opportunities/become-our-volunteer" },
+    ],
+  },
+  {
+    label: "Resources",
+    href: "/Resources/blog-posts",
+    children: [
+      { label: "Blog Posts", href: "/resources/blog-posts" },
+      { label: "Reports", href: "/resources/reports" },
+      { label: "Press Release", href: "/resources/press-release" }
+    ],
+  },
+  
   { label: "Donate", href: "/donate" },
   { label: "Contact", href: "/contact" },
 ];
@@ -76,7 +106,7 @@ export default function Navbar() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute left-0 mt-2 flex flex-col bg-white shadow-lg rounded-lg"
+                      className="absolute left-0 mt-2 flex flex-col bg-white shadow-lg rounded-lg w-max"
                     >
                       {link.children.map((sublink) => (
                         <Link
