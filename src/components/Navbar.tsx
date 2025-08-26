@@ -7,10 +7,10 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Who We Are", href: "/about-us",
+  { label: "Who We Are", href: "/who-we-are/about-us",
     children: [                               
-      { label: "About Us", href: "/about-us" },
-      { label: "Team", href: "/team" },
+      { label: "About Us", href: "/who-we-are/about-us" },
+      { label: "Team", href: "/who-we-are/team" },
     ]
 
   },
@@ -29,8 +29,13 @@ const navLinks = [
     label: "Our Stories",
     href: "/stories",
     children: [
-      { label: "Blogs", href: "/blogs" },
-      { label: "Resources", href: "/resources" },
+      { label: "Children’s Day", href: "/our-stories/childrens-day" },
+      { label: "16 Days of Activism", href: "/our-stories/16-days-of-activism" },
+      { label: "World Happiness Day", href: "/our-stories/world-happiness-day" },
+      { label: "IWD", href: "/our-stories/iwd" },
+      { label: "IDGC", href: "/our-stories/idgc" },
+      { label: "Impact Reports", href: "/our-stories/impact-reports" },
+      { label: "SRHR", href: "/our-stories/srhr" }
     ],
   },
   { label: "Scholarships", href: "/scholarships" },
@@ -44,9 +49,9 @@ const navLinks = [
   },
   {
     label: "Resources",
-    href: "/Resources/blog-posts",
+    href: "/Resources/blogs",
     children: [
-      { label: "Blog Posts", href: "/resources/blog-posts" },
+      { label: "Blog Posts", href: "/resources/blogs" },
       { label: "Reports", href: "/resources/reports" },
       { label: "Press Release", href: "/resources/press-release" }
     ],
