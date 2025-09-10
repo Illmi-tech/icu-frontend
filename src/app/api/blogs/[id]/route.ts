@@ -29,7 +29,7 @@ export async function DELETE(
     // if image exists, delete it
     if (blog.image_path) {
       const relativePath = blog.image_path.replace("/api/images/", "");
-      const filePath = path.join(process.cwd(), "uploads", relativePath);
+      const filePath = path.join(process.cwd(), "..","uploads", relativePath);
       try {
         await fs.unlink(filePath);
         console.log(`Deleted file: ${filePath}`);
@@ -113,7 +113,7 @@ export async function PUT(
         bufferToSave = await sharp(buffer).webp().toBuffer();
       }
 
-      const blogsDir = path.join(process.cwd(), "uploads/blogs");
+      const blogsDir = path.join(process.cwd(), "..", "uploads/blogs");
       await fs.mkdir(blogsDir, { recursive: true });
 
       // Sanitize filename
@@ -139,7 +139,7 @@ export async function PUT(
       // Delete old image if it exists
       if (existingBlog.image_path) {
         const relativePath = existingBlog.image_path.replace("/api/images/", "");
-        const oldPath = path.join(process.cwd(), "uploads", relativePath);
+        const oldPath = path.join(process.cwd(), "..", "uploads", relativePath);
         await fs.unlink(oldPath).catch(() => {});
       }
 

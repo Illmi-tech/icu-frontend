@@ -7,7 +7,7 @@ export async function GET(
   context: { params: Promise<{ path: string[] }> }
 ) {
   const { path: pathParts } = await context.params;
-  const filePath = path.join(process.cwd(), "uploads", ...pathParts);
+  const filePath = path.join(process.cwd(), "..", "uploads", ...pathParts);
 
   try {
     const file = await fs.readFile(filePath);

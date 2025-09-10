@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
         bufferToSave = await sharp(buffer).webp().toBuffer();
       }
 
-      const careersDir = path.join(process.cwd(), "uploads/careers");
+      const careersDir = path.join(process.cwd(), "..", "uploads/careers");
       await fs.mkdir(careersDir, { recursive: true });
 
       // Sanitize filename

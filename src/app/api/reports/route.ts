@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
         bufferToSave = await sharp(buffer).webp().toBuffer();
       }
 
-      const reportsDir = path.join(process.cwd(), "uploads/reports/images");
+      const reportsDir = path.join(process.cwd(), "..", "uploads/reports/images");
       await fs.mkdir(reportsDir, { recursive: true });
 
       const baseName = imageFile.name
@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
     {
       const buffer = Buffer.from(await pdfFile.arrayBuffer());
 
-      const pdfsDir = path.join(process.cwd(), "uploads/reports/pdfs");
+      const pdfsDir = path.join(process.cwd(), "..", "uploads/reports/pdfs");
       await fs.mkdir(pdfsDir, { recursive: true });
 
       const baseName = pdfFile.name

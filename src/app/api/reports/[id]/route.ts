@@ -25,14 +25,14 @@ export async function DELETE(
     // Delete image if exists
     if (report.image_path) {
       const imageRelativePath = report.image_path.replace("/api/images/", "");
-      const imageFilePath = path.join(process.cwd(), "uploads", imageRelativePath);
+      const imageFilePath = path.join(process.cwd(), "..", "uploads", imageRelativePath);
       await fs.unlink(imageFilePath).catch(() => {});
     }
 
     // Delete PDF if exists
     if (report.pdf_path) {
       const pdfRelativePath = report.pdf_path.replace("/api/pdfs/", "");
-      const pdfFilePath = path.join(process.cwd(), "uploads", pdfRelativePath);
+      const pdfFilePath = path.join(process.cwd(), "..", "uploads", pdfRelativePath);
       await fs.unlink(pdfFilePath).catch(() => {});
     }
 
@@ -98,7 +98,7 @@ export async function PUT(
         bufferToSave = await sharp(buffer).webp().toBuffer();
       }
 
-      const reportsDir = path.join(process.cwd(), "uploads/reports/images");
+      const reportsDir = path.join(process.cwd(), "..", "uploads/reports/images");
       await fs.mkdir(reportsDir, { recursive: true });
 
       const baseName = imageFile.name
@@ -121,7 +121,7 @@ export async function PUT(
       // Delete old image if exists
       if (existingReport.image_path) {
         const imageRelativePath = existingReport.image_path.replace("/api/images/", "");
-        const oldPath = path.join(process.cwd(), "uploads", imageRelativePath);
+        const oldPath = path.join(process.cwd(), "..", "uploads", imageRelativePath);
         await fs.unlink(oldPath).catch(() => {});
       }
 
@@ -132,7 +132,7 @@ export async function PUT(
     // Handle PDF replacement
     if (pdfFile) {
       const buffer = Buffer.from(await pdfFile.arrayBuffer());
-      const pdfsDir = path.join(process.cwd(), "uploads/reports/pdfs");
+      const pdfsDir = path.join(process.cwd(), "..", "uploads/reports/pdfs");
       await fs.mkdir(pdfsDir, { recursive: true });
 
       const baseName = pdfFile.name
@@ -155,7 +155,7 @@ export async function PUT(
       // Delete old PDF
       if (existingReport.pdf_path) {
         const pdfRelativePath = existingReport.pdf_path.replace("/api/pdfs/", "");
-        const oldPath = path.join(process.cwd(), "uploads", pdfRelativePath);
+        const oldPath = path.join(process.cwd(), "..", "uploads", pdfRelativePath);
         await fs.unlink(oldPath).catch(() => {});
       }
 

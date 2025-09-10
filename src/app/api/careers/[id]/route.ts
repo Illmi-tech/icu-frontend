@@ -29,7 +29,7 @@ export async function DELETE(
     // if image exists, delete it
     if (career.image_path) {
       const relativePath = career.image_path.replace("/api/images/", "");
-      const filePath = path.join(process.cwd(), "uploads", relativePath);
+      const filePath = path.join(process.cwd(), "..", "uploads", relativePath);
       try {
         await fs.unlink(filePath);
         console.log(`Deleted file: ${filePath}`);
@@ -113,7 +113,7 @@ export async function PUT(
         bufferToSave = await sharp(buffer).webp().toBuffer();
       }
 
-      const careersDir = path.join(process.cwd(), "uploads/careers");
+      const careersDir = path.join(process.cwd(), "..", "uploads/careers");
       await fs.mkdir(careersDir, { recursive: true });
 
       // Sanitize filename
@@ -139,7 +139,7 @@ export async function PUT(
       // Delete old image if it exists
       if (existingCareer.image_path) {
         const relativePath = existingCareer.image_path.replace("/api/images/", "");
-        const oldPath = path.join(process.cwd(), "uploads", relativePath);
+        const oldPath = path.join(process.cwd(), "..", "uploads", relativePath);
         await fs.unlink(oldPath).catch(() => {});
       }
 
