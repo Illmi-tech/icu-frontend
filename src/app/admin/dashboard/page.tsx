@@ -9,16 +9,20 @@ export default function DashboardPage() {
       {/* Example stats grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <div className="rounded-2xl bg-white p-6 shadow">
-          <h3 className="text-lg font-semibold text-gray-700">Users</h3>
-          <p className="mt-2 text-3xl font-bold text-gray-900">1,245</p>
+          <h3 className="text-lg font-bold text-gray-700">Vision</h3>
+          <p className="mt-2 text-3xl font-semibold text-gray-900">To secure the right to education and a life free from violence for less privileged children in Nigeria.</p>
         </div>
         <div className="rounded-2xl bg-white p-6 shadow">
-          <h3 className="text-lg font-semibold text-gray-700">Projects</h3>
-          <p className="mt-2 text-3xl font-bold text-gray-900">312</p>
+          <h3 className="text-lg font-bold text-gray-700">Mission</h3>
+          <p className="mt-2 text-3xl font-semibold text-gray-900">To explore innovative solutions that will transform communities through improved equity and excellence.</p>
         </div>
         <div className="rounded-2xl bg-white p-6 shadow">
-          <h3 className="text-lg font-semibold text-gray-700">Revenue</h3>
-          <p className="mt-2 text-3xl font-bold text-gray-900">$45,210</p>
+          <h3 className="text-lg font-bold text-gray-700">Values</h3>
+          <ul className="mt-2 text-3xl font-semibold text-gray-900 list-disc pl-5 text-left space-y-1">
+            <li>Integrity</li>
+            <li>Inclusion</li>
+            <li>Impact</li>
+          </ul>
         </div>
       </div>
     </div>

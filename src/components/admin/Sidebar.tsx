@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/client/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
@@ -24,6 +24,19 @@ const menuItems = [
 
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  async function handleLogout() {
+    try {
+      await fetch("/api/admin/logout", {
+        method: "POST",
+        credentials: "include", // ensures cookies are sent
+      });
+      router.push("/admin/login");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  }
 
   return (
     <>
@@ -58,6 +71,20 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
             </div>
             <nav className="flex flex-col space-y-2 p-2">
               {menuItems.map((item) => (
+                item.name === "Logout" ? (
+                  <button
+                    key={item.name}
+                    onClick={() => {
+                      handleLogout();
+                      setIsOpen(false); // also close sidebar after logout
+                    }}
+                    className={cn(
+                      "rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-700 transition-colors text-left"
+                    )}
+                  >
+                    {item.name}
+                  </button>
+                ) : (
                 <Link
                   key={item.href}
                   href={item.href}
@@ -69,6 +96,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                 >
                   {item.name}
                 </Link>
+                )
               ))}
             </nav>
           </motion.aside>
@@ -80,17 +108,29 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         <div className="p-4 text-xl font-bold md:pt-20">Admin</div>
         <nav className="flex flex-col space-y-2 p-2">
           {menuItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-700 transition-colors",
-                pathname === item.href ? "bg-gray-700" : ""
-              )}
-            >
-              {item.name}
-            </Link>
-          ))}
+            item.name === "Logout" ? (
+              <button
+                key={item.name}
+                onClick={handleLogout}
+                className={cn(
+                  "rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-700 transition-colors text-left"
+                )}
+              >
+                {item.name}
+              </button>
+            ) : (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      "rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-700 transition-colors",
+                      pathname === item.href ? "bg-gray-700" : ""
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                )
+        ))}
         </nav>
       </aside>
     </>
