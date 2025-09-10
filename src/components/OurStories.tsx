@@ -2,31 +2,36 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const stories = [
   {
-    title: "Back-to-School Support",
+    title: "International Women's Day",
     description:
-      "ICF helped 50 children return to school with supplies, uniforms, and fees covered.",
-    image: "/stories/story1.JPG",
+      "Celebrating women’s achievements and promoting gender equality with ICF’s impactful initiatives.",
+    image: "/stories/iwd/iwd1.webp",
+    link: "/our-stories/iwd",
   },
   {
-    title: "Women Household Support Program",
+    title: "16 Days of Activism",
     description:
-      "We provided household essentials for women in rural communities to improve their living conditions.",
-    image: "/stories/story2.JPG",
+      "ICF conducted outreach across 16 Abuja schools, educating students on GBV, rights, and inclusivity.",
+    image: "/stories/16-days-of-activism/doa1.webp",
+    link: "/our-stories/16-days-of-activism",
   },
   {
-    title: "Community Literacy Program",
+    title: "International Day of the Girl Child ",
     description:
-      "We launched free literacy classes in underserved rural communities.",
-    image: "/stories/story3.JPG",
+      "An essay competition empowered peer advocates to amplify girls’ voices in the fight against GBV.",
+    image: "/stories/idgc/idgc3.webp",
+    link: "/our-stories/idgc",
   },
   {
     title: "Safe Space for Girls",
     description:
       "Our new safe space provides mentorship and protection for girls facing abuse.",
-    image: "/stories/story4.JPG",
+    image: "/projects/asis/asis4.webp",
+    link: "/our-projects/asis",
   },
 ];
 
@@ -69,6 +74,16 @@ export default function OurStories() {
                   {story.title}
                 </h3>
                 <p className="text-gray-700 text-sm">{story.description}</p>
+
+                <div className="mt-4">
+                  <Link
+                    href={story.link}
+                    className="inline-block bg-[#FDBB3E] text-white font-medium px-4 py-2 rounded-lg hover:bg-[#e0a12e] transition"
+                  >
+                    Learn More
+                  </Link>
+                </div>
+
               </div>
             </motion.div>
           ))}

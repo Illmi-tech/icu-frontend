@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Lightbulb, Target, HeartHandshake } from 'lucide-react';
+import Link from 'next/link';
 
 export default function AboutUs() {
   return (
@@ -73,6 +74,20 @@ export default function AboutUs() {
             </ul>
           </motion.div>
         </div>
+        {/* Learn More Button */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="mt-12"
+        >
+          <Link
+            href="/who-we-are/about-us"
+            className="inline-block bg-[#FDBB3E] text-white font-medium px-6 py-3 rounded-lg shadow-md hover:bg-[#e0a12e] transition"
+          >
+            Learn More
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

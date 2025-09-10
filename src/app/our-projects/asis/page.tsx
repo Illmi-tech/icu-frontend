@@ -9,7 +9,7 @@ export default function ASISPage() {
       <section className="text-center py-12 px-6">
         <motion.h1
           className="text-4xl font-bold"
-          style={{ color: "#6A0DAD" }}
+          style={{ color: "#53CAE9" }}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -29,10 +29,19 @@ export default function ASISPage() {
       {/* Hero Section */}
       <section
         className="relative h-96 flex items-center justify-center text-white"
-        style={{ backgroundImage: "url('/projects/asis/hero.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}
+        style={{ backgroundImage: "url('/projects/asis/hero.webp')", backgroundSize: "cover", backgroundPosition: "center" }}
       >
-        <div className="absolute inset-0 bg-black/50"></div>
-        <h2 className="relative text-3xl font-semibold z-10">Safer schools, safer spaces</h2>
+        <div className="absolute inset-0 bg-black/50">
+        <motion.img
+                  src="/projects/asis/hero.webp"
+                  alt="ASSH Project Hero"
+                  initial={{ scale: 1.1, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 1 }}
+                  className="w-full h-full object-cover"
+                />
+        </div>
+       
       </section>
 
       {/* Project Overview */}
@@ -50,25 +59,25 @@ export default function ASISPage() {
       <section className="bg-gray-50 py-16 px-6">
         <h2
           className="text-3xl font-bold text-center mb-10"
-          style={{ color: "#6A0DAD" }}
+          style={{ color: "#53CAE9" }}
         >
           Impact so far
         </h2>
         <div className="relative max-w-3xl mx-auto">
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-purple-300"></div>
+          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-[#53CAE9]"></div>
           <div className="space-y-12">
             <div className="relative flex items-center">
               <div className="w-1/2 pr-8 text-right">
                 <h3 className="font-semibold text-lg">22 Gender Clubs Established</h3>
                 <p className="text-gray-600">Peer-to-peer platforms in schools fostering awareness, safety, and leadership.</p>
               </div>
-              <div className="w-8 h-8 bg-purple-600 rounded-full relative z-10"></div>
+              <div className="w-8 h-8 bg-[#53CAE9] rounded-full relative z-10"></div>
               <div className="w-1/2"></div>
             </div>
 
             <div className="relative flex items-center">
               <div className="w-1/2"></div>
-              <div className="w-8 h-8 bg-purple-600 rounded-full relative z-10"></div>
+              <div className="w-8 h-8 bg-[#53CAE9] rounded-full relative z-10"></div>
               <div className="w-1/2 pl-8">
                 <h3 className="font-semibold text-lg">1,100+ Student Members</h3>
                 <p className="text-gray-600">Adolescent girls actively engaged in creating safe learning environments.</p>
@@ -80,7 +89,7 @@ export default function ASISPage() {
                 <h3 className="font-semibold text-lg">Teachers & Leaders Trained</h3>
                 <p className="text-gray-600">Guidance counselors, PTA leaders, and teachers trained to prevent & respond to GBV.</p>
               </div>
-              <div className="w-8 h-8 bg-purple-600 rounded-full relative z-10"></div>
+              <div className="w-8 h-8 bg-[#53CAE9] rounded-full relative z-10"></div>
               <div className="w-1/2"></div>
             </div>
           </div>
@@ -91,14 +100,29 @@ export default function ASISPage() {
       <section className="py-16 px-6">
         <h2
           className="text-3xl font-bold text-center mb-8"
-          style={{ color: "#6A0DAD" }}
+          style={{ color: "#53CAE9" }}
         >
           Project Photos
         </h2>
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          <img src="/projects/asis/photo1.jpg" alt="ASIS photo 1" className="rounded-xl shadow-md" />
-          <img src="/projects/asis/photo2.jpg" alt="ASIS photo 2" className="rounded-xl shadow-md" />
-          <img src="/projects/asis/photo3.jpg" alt="ASIS photo 3" className="rounded-xl shadow-md" />
+          <motion.img
+                      src="/projects/asis/asis1.webp"
+                      alt="ASIS Photo 1"
+                      whileHover={{ scale: 1.05 }}
+                      className="rounded-2xl shadow-lg object-cover w-full h-64"
+                    />
+                    <motion.img
+                      src="/projects/asis/asis2.webp"
+                      alt="ASIS Photo 2"
+                      whileHover={{ scale: 1.05 }}
+                      className="rounded-2xl shadow-lg object-cover w-full h-64"
+                    />
+                    <motion.img
+                      src="/projects/asis/asis3.webp"
+                      alt="ASIS Photo 3"
+                      whileHover={{ scale: 1.05 }}
+                      className="rounded-2xl shadow-lg object-cover w-full h-64"
+                    />
         </div>
       </section>
     </div>

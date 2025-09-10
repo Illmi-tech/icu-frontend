@@ -1,0 +1,19 @@
+-- AlterTable
+ALTER TABLE `careers` MODIFY `content` TEXT NOT NULL;
+
+-- CreateTable
+CREATE TABLE `volunteer_jobs` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(191) NOT NULL,
+    `content` TEXT NOT NULL,
+    `image_path` VARCHAR(191) NULL,
+    `slug` VARCHAR(191) NOT NULL,
+    `date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `admin_id` INTEGER NOT NULL,
+
+    UNIQUE INDEX `volunteer_jobs_slug_key`(`slug`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `volunteer_jobs` ADD CONSTRAINT `volunteer_jobs_admin_id_fkey` FOREIGN KEY (`admin_id`) REFERENCES `admins`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

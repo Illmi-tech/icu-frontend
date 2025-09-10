@@ -19,12 +19,100 @@ model Admin {
   last_name  String
   username   String @unique
   password   String
+  blogs Blog[]
+  careers    Career[]
+  volunteer_jobs    Volunteer_Job[]
+  scholarships    Scholarship[]
+  press_releases    Press_release[]
+  reports    Report[]
 
   @@map("admins") 
 }
 
+model Blog {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String   @db.Text
+  image_path String?   // optional
+  slug       String   @unique
+  date      DateTime  @default(now())
+  author    Admin     @relation(fields: [author_id], references: [id])
+  author_id  Int
 
-//datasource db {
-//  provider = "postgresql"
-//  url      = env("DATABASE_URL")
-//}
+  @@map("blogs")
+}
+
+model Career {
+  id         Int      @id @default(autoincrement())
+  title      String
+  content    String   @db.Text 
+  image_path String?
+  slug       String   @unique
+  date       DateTime @default(now())
+  admin_id   Int
+
+  // Relation to Admin
+  admin      Admin    @relation(fields: [admin_id], references: [id])
+
+  @@map("careers")
+}
+
+model Volunteer_Job {
+  id         Int      @id @default(autoincrement())
+  title      String
+  content    String   @db.Text
+  image_path String?
+  slug       String   @unique
+  date       DateTime @default(now())
+  admin_id   Int
+
+  // Relation to Admin
+  admin      Admin    @relation(fields: [admin_id], references: [id])
+
+  @@map("volunteer_jobs")
+}
+
+model Scholarship {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String   @db.Text
+  image_path String?   // optional
+  slug       String   @unique
+  date      DateTime  @default(now())
+  admin_id   Int
+
+  // Relation to Admin
+  admin      Admin    @relation(fields: [admin_id], references: [id])
+
+  @@map("scholarships")
+}
+
+model Press_release {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String   @db.Text
+  image_path String?   // optional
+  slug       String   @unique
+  date      DateTime  @default(now())
+  admin_id   Int
+
+  // Relation to Admin
+  admin      Admin    @relation(fields: [admin_id], references: [id])
+
+  @@map("press_releases")
+}
+
+model Report {
+  id        Int      @id @default(autoincrement())
+  title     String
+  image_path String?   // optional
+  pdf_path String
+  slug       String   @unique
+  date      DateTime  @default(now())
+  admin_id   Int
+
+  // Relation to Admin
+  admin      Admin    @relation(fields: [admin_id], references: [id])
+
+  @@map("reports")
+}

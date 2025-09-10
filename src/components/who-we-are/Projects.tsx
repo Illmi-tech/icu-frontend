@@ -2,37 +2,44 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const projects = [
   {
     title: 'Walk in Their Shoes',
     desc: 'A campaign supporting out-of-school children across Nigeria through a digital crowdfunding initiative. Over 800 scholarships awarded.',
-    img: '/images/projects/wits.JPG',
+    img: '/projects/wits/wits1.webp',
+    link: '/our-projects/wits',
   },
   {
     title: 'Community Cluster Learning Model (CCLM)',
     desc: 'Providing basic literacy, vocational training, and financial inclusion strategies for underserved communities, including Fulani and IDP camps.',
-    img: '/images/projects/cclm.jpg',
+    img: '/projects/cclm/cclm1.webp',
+    link: '/our-projects/cclm',
   },
   {
     title: 'Training, Advocacy, Research, Mentorship (TARM)',
     desc: 'Enhancing education quality and safety for adolescent girls by equipping female teachers as mentors.',
-    img: '/images/projects/tarm.jpeg',
+    img: '/projects/tarm/hero.webp',
+    link: '/our-projects/tarm',
   },
   {
     title: 'DIGITSGALS',
     desc: 'Equipping female students in public schools with essential digital skills through NITDA partnerships.',
-    img: '/images/projects/digitsgals.JPG',
+    img: '/projects/digitgals/dg3.webp',
+    link: '/our-projects/digitgals',
   },
   {
     title: 'Ambassador Special Self-Help (ASSH)',
     desc: 'Supporting vulnerable Fulani groups through dairy production training, financial literacy, and sustainable livelihoods.',
-    img: '/images/projects/assh.JPG',
+    img: '/projects/assh/hero.webp',
+    link: '/our-projects/assh',
   },
   {
     title: 'Adolescent Safety in all Spaces (ASIS)',
     desc: 'Addressing gender-based violence in schools and online, creating safe learning environments for adolescent girls.',
-    img: '/images/projects/asis.JPG',
+    img: '/projects/asis/asis1.webp',
+    link: '/our-projects/asis',
   },
 ];
 
@@ -69,6 +76,15 @@ export default function Projects() {
               <div className="p-5">
                 <h3 className="text-xl font-semibold text-[#53CAE9] mb-2">{project.title}</h3>
                 <p className="text-gray-700">{project.desc}</p>
+
+                <div className="mt-4">
+                  <Link
+                    href={project.link}
+                    className="inline-block bg-[#FDBB3E] text-white px-4 py-2 rounded-md font-medium hover:bg-[#e0a12e] transition"
+                  >
+                    Learn More
+                  </Link>
+                </div>
               </div>
             </motion.div>
           ))}

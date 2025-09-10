@@ -27,7 +27,7 @@ export default function ContactPage() {
 
             <div className="flex items-center gap-4">
               <Phone className="text-[#F15D69] w-6 h-6" />
-              <span>+234 XXX XXX XXXX</span>
+              <span>+234 903 984 4291</span>
             </div>
 
             <div className="flex items-center gap-4">
@@ -55,7 +55,7 @@ export default function ContactPage() {
             {/* Google Map */}
             <div className="mt-8">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.6958693585484!2d7.442992375056646!3d9.066320890985095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0d8dbd1e80ed%3A0xc273b08b5b30ae44!2sThe%20Capital%20Hub%2C%20Ahmadu%20Bello%20Way%2C%20Mabushi%20900108%2C%20Abuja!5e0!3m2!1sen!2sng!4v1699989999999!5m2!1sen!2sng"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.4364442572944!2d7.447477076116079!3d9.08969009344427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104e0ac7c6400001%3A0x632186d4f9d6318a!2sThe%20Capital%20Hub!5e0!3m2!1sen!2sng!4v1725988800000!5m2!1sen!2sng"
                 width="100%"
                 height="250"
                 loading="lazy"

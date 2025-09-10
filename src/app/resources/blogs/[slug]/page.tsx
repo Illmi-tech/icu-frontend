@@ -1,48 +1,59 @@
-// src/app/blogs/[slug]/page.tsx
-import { notFound } from 'next/navigation';
-import type { Story } from '@/types/story';
-import Image from 'next/image';
+// src/app/resources/blogs/[slug]/page.tsx
+import { notFound } from "next/navigation";
+import Image from "next/image";
 
-const mockStories: Story[] = [
-  {
-    slug: 'back-to-school-support',
-    title: 'Back-to-School Support',
-    excerpt: 'Short description...',
-    content: 'Full detailed content for back-to-school support...',
-    image: '/stories/story1.JPG',
-    createdAt: '2025-08-01',
-  },
-  {
-    slug: 'community-literacy-program',
-    title: 'Community Literacy Program',
-    excerpt: 'We launched free literacy classes in underserved rural communities.',
-    content: 'Full detailed content for Community Literacy Program...',
-    image: '/stories/story3.JPG',
-    createdAt: '2025-07-10',
-  },
-];
+type Blog = {
+  id: number;
+  slug: string;
+  title: string;
+  content: string;
+  image_path: string | null;
+  date: string;
+};
 
+export default async function BlogDetail({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
 
-export default async function StoryDetail({ params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params;
-  const story = mockStories.find((s) => s.slug === slug);
+  // Fetch the blog from your API
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "";
+  const res = await fetch(
+    `${baseUrl}/api/blogs/${slug}`,
+    { cache: "no-store" } // always fresh
+  );
 
-  if (!story) return notFound();
+  if (!res.ok) return notFound();
+
+  const blog: Blog = await res.json();
+
+  if (!blog) return notFound();
 
   return (
     <section className="py-16 px-4 md:px-8 bg-white min-h-screen">
       <div className="max-w-4xl mx-auto">
-        <Image
-            src={story.image}
-            alt={story.title}
-            width={1200}
-            height={400}
-            className="w-full h-80 object-cover rounded-xl mb-6"
-            priority
-        />
-        <h1 className="text-3xl md:text-4xl font-bold text-[#F15D69] mb-4">{story.title}</h1>
-        <p className="text-sm text-gray-400 mb-6">{new Date(story.createdAt).toDateString()}</p>
-        <p className="text-gray-700 leading-7 whitespace-pre-line">{story.content}</p>
+        {blog.image_path && (
+          <div className="w-full h-64 md:h-96 relative mb-8 rounded-xl">
+            <Image
+              src={blog.image_path}
+              alt={blog.title}
+              fill
+              className="object-contain bg-white-100 rounded-lg"
+              priority
+            />
+          </div>
+        )}
+        <h1 className="text-3xl md:text-4xl font-bold text-[#F15D69] mb-4">
+          {blog.title}
+        </h1>
+        <p className="text-sm text-gray-400 mb-6">
+          {new Date(blog.date).toDateString()}
+        </p>
+        <p className="text-gray-700 leading-7 whitespace-pre-line">
+          {blog.content}
+        </p>
       </div>
     </section>
   );

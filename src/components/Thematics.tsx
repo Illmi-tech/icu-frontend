@@ -1,40 +1,30 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { HighHeelIcon, UsersIcon, BookOpenIcon, LaptopIcon, HandshakeIcon, ShieldCheckIcon } from '@phosphor-icons/react';
+import { GraduationCapIcon, MoneyIcon, GenderIntersexIcon, GavelIcon} from '@phosphor-icons/react';
 
 const thematics = [
 
   {
-    title: 'Walk in Their Shoes',
+    title: 'Quality Education',
     color: '#F15D69',
-    icon: <HighHeelIcon size={40} color="#F15D69" weight="duotone" />,
+    icon: <GraduationCapIcon size={40} color="#F15D69" weight="duotone" />,
   },
   {
-    title: 'Community Cluster Learning Model (CCLM)',
-    color: '#53CAE9',
-    icon: <UsersIcon size={40} color="#53CAE9" />,
+    title: 'Enterpreneurship',
+    color: '#146433ff',
+    icon: <MoneyIcon size={40} color="#146433ff" />,
   },
   {
-    title: 'Training, Advocacy, Research, Mentorship (TARM)',
+    title: 'Gender Equality & Protection',
     color: '#FDBB3E',
-    icon: <BookOpenIcon size={40} color="#FDBB3E" />,
+    icon: <GenderIntersexIcon size={40} color="#FDBB3E" />,
   },
   {
-    title: 'DIGITSGALS',
+    title: 'Policy Advocacy',
     color: '#9B5DE5',
-    icon: <LaptopIcon size={40} color="#9B5DE5" />,
-  },
-  {
-    title: 'Ambassador Special Self-Help (ASSH)',
-    color: '#34D399',
-    icon: <HandshakeIcon size={40} color="#34D399" />,
-  },
-  {
-    title: 'Adolescent Safety in all Spaces (ASIS)',
-    color: '#3B82F6',
-    icon: <ShieldCheckIcon size={40} color="#3B82F6" />,
-  },
+    icon: <GavelIcon size={40} color="#9B5DE5" />,
+  }
 ];
 
 export default function Thematics() {
@@ -50,7 +40,7 @@ export default function Thematics() {
           Our Thematic Areas
         </motion.h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8">
           {thematics.map((item, index) => (
             <motion.div
               key={item.title}

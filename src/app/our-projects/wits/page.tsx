@@ -2,6 +2,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function WalkInTheirShoes() {
   return (
@@ -13,7 +14,7 @@ export default function WalkInTheirShoes() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h1 className="text-3xl md:text-5xl font-bold text-blue-700 mb-4">
+        <h1 className="text-3xl md:text-5xl font-bold text-[#F15D69] mb-4">
           Walk in Their Shoes (WITS)
         </h1>
         <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto">
@@ -54,20 +55,25 @@ export default function WalkInTheirShoes() {
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.4 }}
       >
-        <h2 className="text-2xl font-semibold text-blue-600 mb-6 text-center">
+        <h2 className="text-2xl font-semibold text-[#F15D69] mb-6 text-center">
           Project Photos
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {["photo1", "photo2", "photo3"].map((photo, index) => (
+          {["wits1", "wits2", "wits3"].map((photo, index) => (
             <motion.div
               key={photo}
-              className="w-full h-64 bg-gray-200 rounded-xl flex items-center justify-center shadow-md"
+              className="relative w-full h-64 bg-gray-200 rounded-xl flex items-center justify-center shadow-md"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
             >
-              <span className="text-gray-500">Insert project photo</span>
+              <Image
+                src={`/projects/wits/${photo}.webp`}
+                alt={`Walk in their shoes ${index + 1}`}
+                fill
+                className="object-cover"
+              />
             </motion.div>
           ))}
         </div>

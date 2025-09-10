@@ -29,13 +29,13 @@ const navLinks = [
     label: "Our Stories",
     href: "/stories",
     children: [
-      { label: "Children’s Day", href: "/our-stories/childrens-day" },
+     // { label: "Children’s Day", href: "/our-stories/childrens-day" },
       { label: "16 Days of Activism", href: "/our-stories/16-days-of-activism" },
-      { label: "World Happiness Day", href: "/our-stories/world-happiness-day" },
+     // { label: "World Happiness Day", href: "/our-stories/world-happiness-day" },
       { label: "IWD", href: "/our-stories/iwd" },
       { label: "IDGC", href: "/our-stories/idgc" },
-      { label: "Impact Reports", href: "/our-stories/impact-reports" },
-      { label: "SRHR", href: "/our-stories/srhr" }
+     // { label: "Impact Reports", href: "/our-stories/impact-reports" },
+     // { label: "SRHR", href: "/our-stories/srhr" }
     ],
   },
   { label: "Scholarships", href: "/scholarships" },
@@ -44,7 +44,7 @@ const navLinks = [
     href: "/opportunities/careers",
     children: [
       { label: "Careers", href: "/opportunities/careers" },
-      { label: "Become Our Volunteer", href: "/opportunities/become-our-volunteer" },
+      { label: "Become Our Volunteer", href: "/opportunities/volunteer-jobs" },
     ],
   },
   {
@@ -53,7 +53,7 @@ const navLinks = [
     children: [
       { label: "Blog Posts", href: "/resources/blogs" },
       { label: "Reports", href: "/resources/reports" },
-      { label: "Press Release", href: "/resources/press-release" }
+      { label: "Press Releases", href: "/resources/press-releases" }
     ],
   },
   
@@ -66,6 +66,7 @@ export default function Navbar() {
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
   // function to handle hover (desktop only)
   const handleMouseEnter = (menu: string) => {
@@ -74,11 +75,15 @@ export default function Navbar() {
     setSubmenuOpen(true);
   };
 
+  const toggleSubmenu = (href: string) => {
+    setOpenSubmenu(openSubmenu === href ? null : href);
+  };
+
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setSubmenuOpen(false);
       setHoveredMenu(null);
-    }, 1500); // 2 seconds delay
+    }, 500); // 2 seconds delay
   };
 
   return (
@@ -155,27 +160,48 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-white shadow-md px-4 py-3 space-y-3"
+            className="md:hidden bg-white shadow-md px-4 py-3 space-y-3 
+                       max-h-[80vh] overflow-y-auto"
           >
             {navLinks.map((link) =>
               link.children ? (
                 <div key={link.href} className="space-y-2">
-                  <p className="font-medium flex items-center">
+                  {/* ✅ CHANGED: button toggles submenu */}
+                  <button
+                    className="w-full flex justify-between items-center font-medium"
+                    onClick={() => toggleSubmenu(link.href)}
+                  >
                     {link.label}
-                    <ChevronDown className="ml-1 w-4 h-4" />
-                  </p>
-                  <div className="pl-4 space-y-2">
-                    {link.children.map((sublink) => (
-                      <Link
-                        key={sublink.href}
-                        href={sublink.href}
-                        className="block text-black hover:text-[#53CAE9] transition"
-                        onClick={() => setIsOpen(false)}
+                    <ChevronDown
+                      className={`ml-1 w-4 h-4 transition-transform ${
+                        openSubmenu === link.href ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  {/* ✅ Show submenu only if open */}
+                  <AnimatePresence>
+                    {openSubmenu === link.href && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="pl-4 space-y-2"
                       >
-                        {sublink.label}
-                      </Link>
-                    ))}
-                  </div>
+                        {link.children.map((sublink) => (
+                          <Link
+                            key={sublink.href}
+                            href={sublink.href}
+                            className="block text-black hover:text-[#53CAE9] transition"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            {sublink.label}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               ) : (
                 <Link

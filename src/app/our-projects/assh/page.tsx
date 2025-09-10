@@ -8,7 +8,7 @@ export default function ASSHPage() {
   return (
     <div className="min-h-screen bg-white text-gray-800">
       {/* Heading Section */}
-      <section className="bg-[#2E8B57] text-white py-16 text-center">
+      <section className="bg-[#53CAE9] text-white py-16 text-center">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -63,7 +63,7 @@ export default function ASSHPage() {
       {/* Impact Section - Unique Timeline Layout */}
       <section className="py-16 px-6 md:px-16 lg:px-24 bg-gray-50">
         <motion.h2
-          className="text-3xl font-bold text-center mb-12 text-[#2E7D32]"
+          className="text-3xl font-bold text-center mb-12 text-[#53CAE9]"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -71,7 +71,7 @@ export default function ASSHPage() {
           Impact So Far
         </motion.h2>
 
-        <div className="relative border-l-4 border-[#2E7D32] max-w-3xl mx-auto space-y-10">
+        <div className="relative border-l-4 border-[#53CAE9] max-w-3xl mx-auto space-y-10">
           {/* Milestone 1 */}
           <motion.div
             className="ml-6"
@@ -80,8 +80,8 @@ export default function ASSHPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="absolute -left-4 w-8 h-8 rounded-full bg-[#2E7D32] border-4 border-white shadow-md"></div>
-            <h3 className="text-xl font-semibold text-[#2E7D32]">
+            <div className="absolute -left-4 w-8 h-8 rounded-full bg-[#53CAE9] border-4 border-white shadow-md"></div>
+            <h3 className="text-xl font-semibold text-[#53CAE9]">
               Improved Dairy Output & Income Stability
             </h3>
             <p className="text-gray-700 mt-2">
@@ -97,8 +97,8 @@ export default function ASSHPage() {
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            <div className="absolute -left-4 w-8 h-8 rounded-full bg-[#2E7D32] border-4 border-white shadow-md"></div>
-            <h3 className="text-xl font-semibold text-[#2E7D32]">
+            <div className="absolute -left-4 w-8 h-8 rounded-full bg-[#53CAE9] border-4 border-white shadow-md"></div>
+            <h3 className="text-xl font-semibold text-[#53CAE9]">
               Family Empowerment
             </h3>
             <p className="text-gray-700 mt-2">
@@ -115,8 +115,8 @@ export default function ASSHPage() {
             viewport={{ once: true }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            <div className="absolute -left-4 w-8 h-8 rounded-full bg-[#2E7D32] border-4 border-white shadow-md"></div>
-            <h3 className="text-xl font-semibold text-[#2E7D32]">
+            <div className="absolute -left-4 w-8 h-8 rounded-full bg-[#53CAE9] border-4 border-white shadow-md"></div>
+            <h3 className="text-xl font-semibold text-[#53CAE9]">
               Community Sustainability
             </h3>
             <p className="text-gray-700 mt-2">
@@ -133,7 +133,7 @@ export default function ASSHPage() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl font-bold text-center text-[#2E8B57]"
+          className="text-3xl font-bold text-center text-[#53CAE9]"
         >
           Project Photos
         </motion.h2>

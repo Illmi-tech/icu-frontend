@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function AdminLoginPage() {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -30,7 +32,7 @@ export default function AdminLoginPage() {
       }
 
       // Redirect on success (replace with your dashboard route)
-      window.location.href = "/admin/dashboard";
+      router.push("/admin/dashboard");
     } catch (err) {
       showError("Something went wrong. Please try again.");
     }
