@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,46 +8,46 @@ datasource db {
 }
 
 model Admin {
-  id         Int    @id @default(autoincrement())
-  first_name String
-  last_name  String
-  username   String @unique
-  password   String
-  blogs Blog[]
-  careers    Career[]
-  volunteer_jobs    Volunteer_Job[]
-  scholarships    Scholarship[]
-  press_releases    Press_release[]
-  reports    Report[]
+  id             Int             @id @default(autoincrement())
+  first_name     String
+  last_name      String
+  username       String          @unique
+  password       String
+  blogs          Blog[]
+  careers        Career[]
+  press_releases Press_release[]
+  reports        Report[]
+  scholarships   Scholarship[]
+  volunteer_jobs Volunteer_Job[]
 
-  @@map("admins") 
+  @@map("admins")
 }
 
 model Blog {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String   @db.Text
-  image_path String?   // optional
+  id         Int      @id @default(autoincrement())
+  title      String
+  content    String   @db.Text
+  image_path String?
   slug       String   @unique
-  date      DateTime  @default(now())
-  author    Admin     @relation(fields: [author_id], references: [id])
+  date       DateTime @default(now())
   author_id  Int
+  author     Admin    @relation(fields: [author_id], references: [id])
 
+  @@index([author_id], map: "blogs_author_id_fkey")
   @@map("blogs")
 }
 
 model Career {
   id         Int      @id @default(autoincrement())
   title      String
-  content    String   @db.Text 
+  content    String   @db.Text
   image_path String?
   slug       String   @unique
   date       DateTime @default(now())
   admin_id   Int
-
-  // Relation to Admin
   admin      Admin    @relation(fields: [admin_id], references: [id])
 
+  @@index([admin_id], map: "careers_admin_id_fkey")
   @@map("careers")
 }
 
@@ -65,54 +59,50 @@ model Volunteer_Job {
   slug       String   @unique
   date       DateTime @default(now())
   admin_id   Int
-
-  // Relation to Admin
   admin      Admin    @relation(fields: [admin_id], references: [id])
 
+  @@index([admin_id], map: "volunteer_jobs_admin_id_fkey")
   @@map("volunteer_jobs")
 }
 
 model Scholarship {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String   @db.Text
-  image_path String?   // optional
+  id         Int      @id @default(autoincrement())
+  title      String
+  content    String   @db.Text
+  image_path String?
   slug       String   @unique
-  date      DateTime  @default(now())
+  date       DateTime @default(now())
   admin_id   Int
-
-  // Relation to Admin
   admin      Admin    @relation(fields: [admin_id], references: [id])
 
+  @@index([admin_id], map: "scholarships_admin_id_fkey")
   @@map("scholarships")
 }
 
 model Press_release {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String   @db.Text
-  image_path String?   // optional
+  id         Int      @id @default(autoincrement())
+  title      String
+  content    String   @db.Text
+  image_path String?
   slug       String   @unique
-  date      DateTime  @default(now())
+  date       DateTime @default(now())
   admin_id   Int
-
-  // Relation to Admin
   admin      Admin    @relation(fields: [admin_id], references: [id])
 
+  @@index([admin_id], map: "press_releases_admin_id_fkey")
   @@map("press_releases")
 }
 
 model Report {
-  id        Int      @id @default(autoincrement())
-  title     String
-  image_path String?   // optional
-  pdf_path String
+  id         Int      @id @default(autoincrement())
+  title      String
+  image_path String?
+  pdf_path   String
   slug       String   @unique
-  date      DateTime  @default(now())
+  date       DateTime @default(now())
   admin_id   Int
-
-  // Relation to Admin
   admin      Admin    @relation(fields: [admin_id], references: [id])
 
+  @@index([admin_id], map: "reports_admin_id_fkey")
   @@map("reports")
 }
