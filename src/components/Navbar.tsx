@@ -20,7 +20,7 @@ const navLinks = [
       { label: "Walk in Their Shoes", href: "/our-projects/wits" },
       { label: "TARM", href: "/our-projects/tarm" },
       { label: "Digitgals", href: "/our-projects/digitgals" },
-      { label: "ASSH", href: "/our-projects/assh" },
+      { label: "RUGA", href: "/our-projects/assh" },
       { label: "ASIS", href: "/our-projects/asis" }
     ]
 

@@ -15,6 +15,13 @@ const partnerLogos = [
   '/partners/logo8.webp',
   '/partners/logo9.png',
   '/partners/logo10.png',
+  '/partners/logo11.webp',
+  '/partners/logo12.webp',
+  '/partners/logo13.webp',
+  '/partners/logo14.webp',
+  '/partners/logo15.jpg',
+  '/partners/logo16.png',
+  '/partners/logo17.jpeg',
 ];
 
 export default function OurPartners() {

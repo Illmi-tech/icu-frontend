@@ -4,7 +4,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-export default function ASSHPage() {
+export default function RUGAPage() {
   return (
     <div className="min-h-screen bg-white text-gray-800">
       {/* Heading Section */}
@@ -15,7 +15,7 @@ export default function ASSHPage() {
           transition={{ duration: 0.6 }}
           className="text-4xl font-bold"
         >
-          Animal Source of Sustainable Health (ASSH)
+          RUGA Livelihood Support Project
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -48,7 +48,8 @@ export default function ASSHPage() {
           className="text-lg leading-relaxed text-gray-700"
         >
           For Fulani pastoralists, cattle are a lifeline. The Ruga livelihood
-          support is a project that empowered the vulnerable and marginalized
+          support which is ASSH funded by US mission in Nigeria
+          is a project that empowered the vulnerable and marginalized
           Fulani group through improving their existing means of livelihood
           (Dairy milk production). The project is targeted at promoting the
           healthy rearing of cattle, improving the financial outcomes of the
@@ -120,8 +121,42 @@ export default function ASSHPage() {
               Community Sustainability
             </h3>
             <p className="text-gray-700 mt-2">
-              The establishment of local Animal Health Workers (CAHW) has created resilience that endures 
+              The establishment of community Animal Health Workers (CAHW) has created resilience that endures 
               beyond project cycles.
+            </p>
+          </motion.div>
+
+          {/* Milestone 4 */}
+          <motion.div
+            className="ml-6"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            <div className="absolute -left-4 w-8 h-8 rounded-full bg-[#53CAE9] border-4 border-white shadow-md"></div>
+            <h3 className="text-xl font-semibold text-[#53CAE9]">
+              1,500+
+            </h3>
+            <p className="text-gray-700 mt-2">
+              Fulani women trained in dairy production, achieving a 63% increase in profits.
+            </p>
+          </motion.div>
+
+          {/* Milestone 5 */}
+          <motion.div
+            className="ml-6"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            <div className="absolute -left-4 w-8 h-8 rounded-full bg-[#53CAE9] border-4 border-white shadow-md"></div>
+            <h3 className="text-xl font-semibold text-[#53CAE9]">
+              650+
+            </h3>
+            <p className="text-gray-700 mt-2">
+              Women in IDP camps (Adamawa & Abuja) gained vocational skills that improved livelihoods and self-reliance.
             </p>
           </motion.div>
         </div>

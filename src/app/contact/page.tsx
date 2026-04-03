@@ -22,7 +22,7 @@ export default function ContactPage() {
           <div className="space-y-6 text-gray-700">
             <div className="flex items-start gap-4">
               <MapPin className="text-[#F15D69] w-6 h-6 mt-1" />
-              <span>Suite 409, Capital Hub Plaza, Ahmadu Bello Way, Mabushi, Abuja</span>
+              <span>Suite 409, Capital Hub, Mabushi, Abuja, Nigeria</span>
             </div>
 
             <div className="flex items-center gap-4">
@@ -32,7 +32,7 @@ export default function ContactPage() {
 
             <div className="flex items-center gap-4">
               <Mail className="text-[#F15D69] w-6 h-6" />
-              <span>info@illmifund.org</span>
+              <span>info@illmichildrensfund.org</span>
             </div>
 
             {/* Social Media Icons */}

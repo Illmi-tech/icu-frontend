@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.0.x"]
 }
 
 datasource db {
@@ -28,6 +29,7 @@ model Blog {
   title      String
   content    String   @db.Text
   image_path String?
+  image_id   String?
   slug       String   @unique
   date       DateTime @default(now())
   author_id  Int
@@ -42,6 +44,7 @@ model Career {
   title      String
   content    String   @db.Text
   image_path String?
+  image_id   String?
   slug       String   @unique
   date       DateTime @default(now())
   admin_id   Int
@@ -56,6 +59,7 @@ model Volunteer_Job {
   title      String
   content    String   @db.Text
   image_path String?
+  image_id   String?
   slug       String   @unique
   date       DateTime @default(now())
   admin_id   Int
@@ -70,6 +74,7 @@ model Scholarship {
   title      String
   content    String   @db.Text
   image_path String?
+  image_id   String?
   slug       String   @unique
   date       DateTime @default(now())
   admin_id   Int
@@ -84,6 +89,7 @@ model Press_release {
   title      String
   content    String   @db.Text
   image_path String?
+  image_id   String?
   slug       String   @unique
   date       DateTime @default(now())
   admin_id   Int
@@ -97,7 +103,9 @@ model Report {
   id         Int      @id @default(autoincrement())
   title      String
   image_path String?
+  image_id   String?
   pdf_path   String
+  pdf_id   String
   slug       String   @unique
   date       DateTime @default(now())
   admin_id   Int
@@ -106,3 +114,12 @@ model Report {
   @@index([admin_id], map: "reports_admin_id_fkey")
   @@map("reports")
 }
+
+model Subscriber {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now())
+
+  @@map("subscribers")
+}
+

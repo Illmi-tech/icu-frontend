@@ -33,7 +33,7 @@ export default function SixteenDaysPage() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="rounded-2xl p-8 md:p-12 bg-[#FDBB3E] text-[#4B2E83] shadow-xl"
+          className="rounded-2xl p-8 md:p-12 bg-[#FDBB3E] text-black shadow-xl"
         >
           <h2 className="text-2xl md:text-3xl font-semibold mb-4">
             Campaign Highlights

@@ -14,7 +14,7 @@ export default function IDGCPage() {
           transition={{ duration: 0.7 }}
           className="text-4xl md:text-6xl font-bold text-[#F15D69] mb-4"
         >
-          International Day of the Girl Child 2024
+          International Day of the Girl Child
         </motion.h1>
         <motion.h2
           initial={{ opacity: 0 }}

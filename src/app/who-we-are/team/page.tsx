@@ -4,9 +4,9 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const boardOfTrustees = [
-  { name: "Mrs. Maryam Augie A.", role: "Founder/Executive Director ICF", img: "/who-we-are/team/photo1.webp" },
-  { name: "Justice Amina Augie", role: "Rtr. Justice of the Supreme Court of Nigeria (SCN)", img: "/who-we-are/team/photo2.webp" },
-  { name: "Dr. Shehu Yahya", role: "Chairman, Board of Directors of Development Bank of Nigeria Plc (DBN)", img: "/who-we-are/team/photo3.webp" },
+  { name: "Mrs. Maryam Augie Abdulmumin", role: "Founder/Executive Director ICF", img: "/who-we-are/team/photo1.webp" },
+  { name: "Hon. Justice Aminu Augie", role: "CFR, Justice of the Supreme Court of Nigeria (RTD)", img: "/who-we-are/team/photo2.webp" },
+  { name: "Dr. Shehu Yahaya", role: "Chairman, Board of Directors of Development Bank of Nigeria Plc (DBN)", img: "/who-we-are/team/photo3.webp" },
   { name: "Ms. Amina Wali-Shafeeq", role: "Development Consultant", img: "/who-we-are/team/photo4.webp" },
   { name: "Ms. Mercy Banku Abang", role: "Media Entrepreneur and Tech Investor", img: "/who-we-are/team/photo5.webp" },
   { name: "Haj. Noordina Modibbo", role: "Educationist", img: "/who-we-are/team/photo6.webp" },
@@ -23,12 +23,17 @@ const advisoryCouncil = [
 ];
 
 const otherRoles = [
-  { name: "Nana Aisha El-Yakub", role: "M&E Officer, Education and Scholarship Lead", img: "/who-we-are/team/photo14.webp" },
+  { name: "Nana Aisha El-Yakub", role: "M&E Officer/Education and Scholarship Lead", img: "/who-we-are/team/photo14.webp" },
   { name: "Rita Somtochukwu Eze", role: "Finance and M&E Manager", img: "/who-we-are/team/photo15.webp" },
-  { name: "Abdulsamad Isah Mohd", role: "Program Officer, Community & Policy Lead", img: "/who-we-are/team/photo16.webp" },
+  { name: "Abdulsamad Isah Mohd", role: "Programmes Officer/Community & Policy Lead", img: "/who-we-are/team/photo16.webp" },
   { name: "Confidence Albert", role: "Executive Assistant", img: "/who-we-are/team/photo17.webp" },
   { name: "Obaro Abigeal", role: "Communications Assistant", img: "/who-we-are/team/photo18.webp" },
-  { name: "Muo Tovia", role: "Program Officer, Lead (Gender and Protection)", img: "/who-we-are/team/photo19.webp" },
+  { name: "Muo Tovia", role: "Programmes Officer/Gender and Protection Lead", img: "/who-we-are/team/photo19.webp" },
+  { name: "Lynda Ezemba", role: "Community/Safeguarding Officer", img: "/who-we-are/team/photo20.webp" },
+  { name: "Abubakar Mohammed", role: "Procurement Officer", img: "/who-we-are/team/photo21.webp" },
+  { name: "Hope Abang Eyare", role: "Social Media/Content Personnel", img: "/who-we-are/team/photo22.webp" },
+  { name: "Anisa Yaqub", role: "Program Intern", img: "/who-we-are/team/photo23.webp" },
+  { name: "Sani Abubakar", role: "Driver/Logistics", img: "/who-we-are/team/photo24.webp" },
 ];
 
 function Section({ title, members }: { title: string; members: { name: string; role: string; img: string }[] }) {
@@ -85,7 +90,7 @@ export default function TeamsPage() {
 
         <Section title="Board of Trustees" members={boardOfTrustees} />
         <Section title="Advisory Council" members={advisoryCouncil} />
-        <Section title="Other Roles" members={otherRoles} />
+        <Section title="Staff" members={otherRoles} />
       </div>
     </section>
   );

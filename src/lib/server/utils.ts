@@ -1,5 +1,7 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
+import fs from "fs";
+import path from "path";
 
 interface DecodedToken {
   id: number;
@@ -35,4 +37,27 @@ export function generateSlug(title: string): string {
   // Add random 3-digit number
   const randomNumber = Math.floor(Math.random() * 900 + 100); // 100–999
   return `${baseSlug}-${randomNumber}`;
+}
+
+export function logError(err: unknown) {
+  const logFile = path.join(process.cwd(), "error.log");
+
+  let details: string;
+  if (err instanceof Error) {
+    details = err.stack ?? err.message;
+  } else {
+    details = String(err);
+  }
+
+  const message = `[${new Date().toISOString()}] ${details}\n`;
+  fs.appendFileSync(logFile, message, "utf8");
+
+  console.error(err);
+}
+
+export function logInfo(msg: string) {
+  const logFile = path.join(process.cwd(), "error.log");
+  const message = `[${new Date().toISOString()}] INFO: ${msg}\n`;
+  fs.appendFileSync(logFile, message, "utf8");
+  console.log(msg);
 }

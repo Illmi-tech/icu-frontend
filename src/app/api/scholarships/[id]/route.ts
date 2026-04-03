@@ -1,8 +1,8 @@
 import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/server/prisma";
-import fs from "fs/promises";
-import path from "path";
-import sharp from "sharp";
+import {getDecodedToken, logError} from "@/lib/server/utils"; 
+import cloudinary from "@/lib/server/cloudinary";
+import { UploadApiResponse } from "cloudinary";
 
 // DELETE /api/scholarships/:id
 export async function DELETE(
@@ -10,6 +10,9 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const tokenData = await getDecodedToken();
+    if (!tokenData) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+
     const {id} = await params;
     const scholarshipId = parseInt(id, 10);
 
@@ -27,21 +30,36 @@ export async function DELETE(
     }
 
     // if image exists, delete it
-    if (scholarship.image_path) {
-      const relativePath = scholarship.image_path.replace("/api/images/", "");
-      const filePath = path.join(process.cwd(), "..", "uploads", relativePath);
+    if (scholarship.image_id) {
       try {
-        await fs.unlink(filePath);
-        console.log(`Deleted file: ${filePath}`);
-      } catch (err: any) {
-        if (err.code === "ENOENT") {
-          console.warn(`File not found, skipping delete: ${filePath}`);
-        } else {
-          console.error("Error deleting file:", err);
-        }
+        await cloudinary.uploader.destroy(scholarship.image_id);
+            
+      } catch (err) {
+        logError(err);
       }
     }
 
+    // Delete embedded images in blog content
+    if (scholarship.content) {
+      const imgUrls = Array.from<RegExpMatchArray>(
+        scholarship.content.matchAll(/<img[^>]+src="([^">]+)"/g)
+      ).map((m) => m[1]);
+    
+      for (const url of imgUrls) {
+        try {
+          // Convert URL to Cloudinary public_id
+          const publicIdMatch = url.match(
+            /\/upload\/(?:v\d+\/)?(.+?)\.(?:jpg|jpeg|png|webp)(?:\?.*)?$/
+          );
+          if (publicIdMatch?.[1]) {
+            const publicId = publicIdMatch[1];
+            await cloudinary.uploader.destroy(publicId);
+          }
+        } catch (err) {
+            logError(err);
+          }
+      }
+    }
     // delete scholarship from db
     await prisma.scholarship.delete({
       where: { id: scholarshipId },
@@ -50,6 +68,7 @@ export async function DELETE(
     return NextResponse.json({ message: "Scholarship deleted successfully" });
   } catch (error: any) {
     console.error("Error deleting scholarship:", error);
+    logError(error);
     return NextResponse.json(
       { message: "Failed to delete scholarship" },
       { status: 500 }
@@ -65,6 +84,9 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const tokenData = await getDecodedToken();
+    if (!tokenData) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+
     const {id} = await params;
     const scholarshipId = parseInt(id, 10);
     
@@ -85,68 +107,42 @@ export async function PUT(
     const imageFile = formData.get("image") as File | null;
 
     let image_path: string | null = existingScholarship.image_path;
-    const MAX_SIZE = 300 * 1024; // 300 KB
+    let image_id: string | null = existingScholarship.image_id;
+
 
     if (imageFile) {
-      const buffer = Buffer.from(await imageFile.arrayBuffer());
-      let bufferToSave: Buffer;
-
-      // Compress and/or resize if too large
-      if (buffer.length > MAX_SIZE) {
-        let optimizedBuffer = await sharp(buffer)
-          .resize({ width: 1200, withoutEnlargement: true })
-          .webp({ quality: 80 })
-          .toBuffer();
-
-        let quality = 75;
-        while (optimizedBuffer.length > MAX_SIZE && quality > 10) {
-          optimizedBuffer = await sharp(buffer)
-            .resize({ width: 1200, withoutEnlargement: true })
-            .webp({ quality })
-            .toBuffer();
-          quality -= 5;
+          // 🔹 Delete old image from Cloudinary if it exists
+          if (existingScholarship.image_id) {
+            try {
+              await cloudinary.uploader.destroy(existingScholarship.image_id);
+            } catch (err) {
+              logError(err);
+            }
+          }
+    
+          // 🔹 Upload new image to Cloudinary
+          const buffer = Buffer.from(await imageFile.arrayBuffer());
+          const uploadResult = await new Promise<UploadApiResponse>((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+              {
+                folder: "scholarships",
+                format: "webp", // force webp format
+                transformation: [
+                  { width: 1200, crop: "limit" },
+                  { quality: "auto" },
+                ],
+              },
+              (error, result) => {
+                if (error) reject(error);
+                else resolve(result as UploadApiResponse);
+              }
+            );
+            stream.end(buffer);
+          });
+    
+          image_path = uploadResult.secure_url;
+          image_id = uploadResult.public_id;
         }
-
-        bufferToSave = optimizedBuffer;
-      } else {
-        // Convert small images to WebP without resizing
-        bufferToSave = await sharp(buffer).webp().toBuffer();
-      }
-
-      const scholarshipsDir = path.join(process.cwd(), "..", "uploads/scholarships");
-      await fs.mkdir(scholarshipsDir, { recursive: true });
-
-      // Sanitize filename
-      const baseName = imageFile.name
-        .toLowerCase()
-        .replace(/\s+/g, "-") // replace spaces with -
-        .replace(/[^a-z0-9.-]/g, "") // remove non-alphanumeric except . and -
-        .replace(/\.[^/.]+$/, ""); // remove original extension
-
-      // Prefix timestamp for uniqueness and add .webp
-      const timestamp = Date.now();
-      let fileName = `${timestamp}-${baseName}.webp`;
-      let filePath = path.join(scholarshipsDir, fileName);
-
-      // Ensure uniqueness if file exists
-      let counter = 1;
-      while (await fs.stat(filePath).catch(() => false)) {
-        fileName = `${timestamp}-${baseName}-${counter}.webp`;
-        filePath = path.join(scholarshipsDir, fileName);
-        counter++;
-      }
-
-      // Delete old image if it exists
-      if (existingScholarship.image_path) {
-        const relativePath = existingScholarship.image_path.replace("/api/images/", "");
-        const oldPath = path.join(process.cwd(), "..", "uploads", relativePath);
-        await fs.unlink(oldPath).catch(() => {});
-      }
-
-      // Save new image
-      await fs.writeFile(filePath, bufferToSave);
-      image_path = `/api/images/scholarships/${fileName}`;
-    }
 
     const updatedScholarship = await prisma.scholarship.update({
       where: { id: scholarshipId },
@@ -154,12 +150,14 @@ export async function PUT(
         title: title ?? existingScholarship.title,
         content: content ?? existingScholarship.content,
         image_path,
+        image_id,
       },
     });
 
     return NextResponse.json(updatedScholarship, { status: 200 });
   } catch (error) {
     console.error("Error updating scholarship:", error);
+    logError(error);
     return NextResponse.json(
       { message: "Failed to update scholarship" },
       { status: 500 }
@@ -186,6 +184,7 @@ export async function GET(
     return NextResponse.json(scholarship, { status: 200 });
   } catch (error) {
     console.error("Error fetching scholarship:", error);
+    logError(error);
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

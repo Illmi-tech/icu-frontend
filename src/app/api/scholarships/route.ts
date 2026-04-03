@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/server/prisma";
-import { promises as fs } from "fs";
-import path from "path";
-import sharp from "sharp";
-import {getDecodedToken, generateSlug} from "@/lib/server/utils";
+import cloudinary from "@/lib/server/cloudinary";
+import { UploadApiResponse } from "cloudinary";
+import {getDecodedToken, generateSlug, logError} from "@/lib/server/utils";
 
 
 export async function POST(req: NextRequest) {
@@ -23,61 +22,33 @@ export async function POST(req: NextRequest) {
     }
 
     let image_path: string | null = null;
-    const MAX_SIZE = 300 * 1024; // 300 KB
+    let image_id: string | null = null;
 
     if (imageFile) {
-      const buffer = Buffer.from(await imageFile.arrayBuffer());
-      let bufferToSave: Buffer;
-
-      // Compress and/or resize if too large
-      if (buffer.length > MAX_SIZE) {
-        let optimizedBuffer = await sharp(buffer)
-          .resize({ width: 1200, withoutEnlargement: true })
-          .webp({ quality: 80 })
-          .toBuffer();
-
-        let quality = 75;
-        while (optimizedBuffer.length > MAX_SIZE && quality > 10) {
-          optimizedBuffer = await sharp(buffer)
-            .resize({ width: 1200, withoutEnlargement: true })
-            .webp({ quality })
-            .toBuffer();
-          quality -= 5;
+          const buffer = Buffer.from(await imageFile.arrayBuffer());
+    
+          // Upload to Cloudinary
+          const uploadResult = await new Promise<UploadApiResponse>((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+              {
+                folder: "scholarships",                // Cloudinary folder
+                format: "webp",                 // force webp
+                transformation: [
+                  { width: 1200, crop: "limit" }, // resize max width 1200px
+                  { quality: "auto" },            // auto quality
+                ],
+              },
+              (error, result) => {
+                if (error) reject(error);
+                else resolve(result as UploadApiResponse);
+              }
+            );
+            stream.end(buffer);
+          });
+    
+          image_path = uploadResult.secure_url; // Cloudinary URL
+          image_id = uploadResult.public_id;   // Cloudinary public ID
         }
-
-        bufferToSave = optimizedBuffer;
-      } else {
-        // Convert small images to WebP without resizing
-        bufferToSave = await sharp(buffer).webp().toBuffer();
-      }
-
-      const scholarshipsDir = path.join(process.cwd(), "..", "uploads/scholarships");
-      await fs.mkdir(scholarshipsDir, { recursive: true });
-
-      // Sanitize filename
-      const baseName = imageFile.name
-      .toLowerCase()
-      .replace(/\s+/g, "-")         // replace spaces with -
-      .replace(/[^a-z0-9.-]/g, "")  // remove non-alphanumeric except . and -
-      .replace(/\.[^/.]+$/, "");     // remove original extension
-
-      // Prefix timestamp for uniqueness and add .webp
-      const timestamp = Date.now();
-      let fileName = `${timestamp}-${baseName}.webp`;
-      let filePath = path.join(scholarshipsDir, fileName);
-
-      // Ensure uniqueness if file exists
-      let counter = 1;
-      while (await fs.stat(filePath).catch(() => false)) {
-        fileName = `${timestamp}-${baseName}-${counter}.webp`;
-        filePath = path.join(scholarshipsDir, fileName);
-        counter++;
-      }
-
-      // Save the image
-      await fs.writeFile(filePath, bufferToSave);
-      image_path = `/api/images/scholarships/${fileName}`;
-    }
 
     // Generate a unique slug
     let slug: string;
@@ -94,6 +65,7 @@ export async function POST(req: NextRequest) {
         content,
         admin_id: adminId,
         image_path,
+        image_id,
         slug,
       },
     });
@@ -101,6 +73,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(scholarship, { status: 201 });
   } catch (error) {
     console.error("Error creating scholarship:", error);
+    logError(error);
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }
@@ -115,6 +88,7 @@ export async function GET() {
     return NextResponse.json(scholarships, { status: 200 });
   } catch (error) {
     console.error("Error fetching scholarships:", error);
+    logError(error);
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

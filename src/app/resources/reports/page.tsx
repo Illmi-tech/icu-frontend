@@ -71,6 +71,7 @@ export default function ReportsPage() {
               >
                 <Link
                   href={report.pdf_path}
+                  target="_blank"
                   className="block bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition cursor-pointer"
                 >
                   {report.image_path && (

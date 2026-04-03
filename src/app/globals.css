@@ -1,5 +1,6 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
 
 body {
   font-family: 'Poppins', sans-serif;
@@ -18,4 +19,26 @@ body {
   display: flex;
   width: max-content;
   animation: scroll 30s linear infinite;
+}
+
+/* globals.css */
+.blog-content img {
+  max-width: 100%;   /* responsive */
+  height: auto;      /* keep aspect ratio */
+  max-height: 400px; /* avoid overly tall images */
+  margin: 1.5rem auto;
+  border-radius: 8px;
+  object-fit: contain;
+  display: block;    /* center images */
+}
+
+.blog-content a {
+  color: #2563eb;        /* Tailwind blue-600 */
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.blog-content a:hover {
+  color: #1d4ed8;        /* Tailwind blue-700 */
 }

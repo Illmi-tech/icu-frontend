@@ -34,7 +34,7 @@ export default function ASISPage() {
         <div className="absolute inset-0 bg-black/50">
         <motion.img
                   src="/projects/asis/hero.webp"
-                  alt="ASSH Project Hero"
+                  alt="RUGA Project Hero"
                   initial={{ scale: 1.1, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 1 }}

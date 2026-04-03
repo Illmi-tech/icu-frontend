@@ -103,7 +103,7 @@ export default function TARM() {
           Project Photos
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {["tarm1", "tarm2", "tarm3"].map((photo, index) => (
+          {["tarm1", "hero", "tarm3"].map((photo, index) => (
             <motion.div
               key={photo}
               className="relative w-full h-64 bg-gray-200 rounded-xl flex items-center justify-center shadow-md"

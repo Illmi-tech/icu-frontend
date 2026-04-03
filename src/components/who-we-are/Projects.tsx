@@ -24,7 +24,7 @@ const projects = [
     link: '/our-projects/tarm',
   },
   {
-    title: 'DIGITSGALS',
+    title: 'DIGITGALS',
     desc: 'Equipping female students in public schools with essential digital skills through NITDA partnerships.',
     img: '/projects/digitgals/dg3.webp',
     link: '/our-projects/digitgals',

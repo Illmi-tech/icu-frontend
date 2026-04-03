@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/server/prisma";
-import { promises as fs } from "fs";
-import path from "path";
-import sharp from "sharp";
-import { getDecodedToken, generateSlug } from "@/lib/server/utils";
+import cloudinary from "@/lib/server/cloudinary";
+import { UploadApiResponse } from "cloudinary";
+import { getDecodedToken, generateSlug, logError } from "@/lib/server/utils";
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,84 +24,60 @@ export async function POST(req: NextRequest) {
     }
 
     let image_path: string | null = null;
-    const MAX_SIZE = 300 * 1024; // 300 KB
+    let image_id: string | null = null;
 
     // Handle image upload if provided
     if (imageFile) {
       const buffer = Buffer.from(await imageFile.arrayBuffer());
-      let bufferToSave: Buffer;
-
-      if (buffer.length > MAX_SIZE) {
-        let optimizedBuffer = await sharp(buffer)
-          .resize({ width: 1200, withoutEnlargement: true })
-          .webp({ quality: 80 })
-          .toBuffer();
-
-        let quality = 75;
-        while (optimizedBuffer.length > MAX_SIZE && quality > 10) {
-          optimizedBuffer = await sharp(buffer)
-            .resize({ width: 1200, withoutEnlargement: true })
-            .webp({ quality })
-            .toBuffer();
-          quality -= 5;
-        }
-
-        bufferToSave = optimizedBuffer;
-      } else {
-        bufferToSave = await sharp(buffer).webp().toBuffer();
-      }
-
-      const reportsDir = path.join(process.cwd(), "..", "uploads/reports/images");
-      await fs.mkdir(reportsDir, { recursive: true });
-
-      const baseName = imageFile.name
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^a-z0-9.-]/g, "")
-        .replace(/\.[^/.]+$/, "");
-
-      const timestamp = Date.now();
-      let fileName = `${timestamp}-${baseName}.webp`;
-      let filePath = path.join(reportsDir, fileName);
-
-      let counter = 1;
-      while (await fs.stat(filePath).catch(() => false)) {
-        fileName = `${timestamp}-${baseName}-${counter}.webp`;
-        filePath = path.join(reportsDir, fileName);
-        counter++;
-      }
-
-      await fs.writeFile(filePath, bufferToSave);
-      image_path = `/api/images/reports/images/${fileName}`;
+    
+      // Upload to Cloudinary
+      const uploadResult = await new Promise<UploadApiResponse>((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          {
+            folder: "reports/images",                // Cloudinary folder
+            format: "webp",                 // force webp
+            transformation: [
+              { width: 1200, crop: "limit" }, // resize max width 1200px
+              { quality: "auto" },            // auto quality
+            ],
+          },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result as UploadApiResponse);
+          }
+        );
+        stream.end(buffer);
+      });
+    
+      image_path = uploadResult.secure_url; // Cloudinary URL
+      image_id = uploadResult.public_id;   // Cloudinary public ID
     }
 
     // Handle PDF upload (required)
     let pdf_path: string;
+    let pdf_id: string | null = null;
     {
       const buffer = Buffer.from(await pdfFile.arrayBuffer());
 
-      const pdfsDir = path.join(process.cwd(), "..", "uploads/reports/pdfs");
-      await fs.mkdir(pdfsDir, { recursive: true });
+      // Upload to Cloudinary
+      const uploadPdfResult = await new Promise<UploadApiResponse>((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          {
+            folder: "reports/pdfs",                // Cloudinary folder
+            resource_type: "raw",                 // for non-image files
+            format: "pdf",
+          },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result as UploadApiResponse);
+          }
+        );
+        stream.end(buffer);
+      });
 
-      const baseName = pdfFile.name
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^a-z0-9.-]/g, "")
-        .replace(/\.[^/.]+$/, "");
-
-      const timestamp = Date.now();
-      let fileName = `${timestamp}-${baseName}.pdf`;
-      let filePath = path.join(pdfsDir, fileName);
-
-      let counter = 1;
-      while (await fs.stat(filePath).catch(() => false)) {
-        fileName = `${timestamp}-${baseName}-${counter}.pdf`;
-        filePath = path.join(pdfsDir, fileName);
-        counter++;
-      }
-
-      await fs.writeFile(filePath, buffer);
-      pdf_path = `/api/pdfs/reports/pdfs/${fileName}`;
+      pdf_path = uploadPdfResult.secure_url; // Cloudinary URL
+      pdf_id = uploadPdfResult.public_id;   // Cloudinary public ID
+      
     }
 
     // Generate a unique slug
@@ -119,7 +94,9 @@ export async function POST(req: NextRequest) {
         title,
         admin_id: adminId,
         image_path,
+        image_id,
         pdf_path,
+        pdf_id, 
         slug,
       },
     });
@@ -127,6 +104,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(report, { status: 201 });
   } catch (error) {
     console.error("Error creating report:", error);
+    logError(error);
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }
@@ -139,6 +117,7 @@ export async function GET() {
     return NextResponse.json(reports, { status: 200 });
   } catch (error) {
     console.error("Error fetching reports:", error);
+    logError(error);
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

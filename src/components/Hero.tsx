@@ -44,7 +44,7 @@ export default function HeroCarousel() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-[80vh] flex items-center justify-center bg-black overflow-hidden text-white">
+    <section className="relative w-full min-h-[80vh] flex items-center justify-center bg-[#53CAE9] overflow-hidden text-white">
       
       {/* Preload images for smooth transition */}
       <div className="hidden">

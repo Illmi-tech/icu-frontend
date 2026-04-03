@@ -36,14 +36,16 @@ export default async function VolunteerJobDetail({
     <section className="py-16 px-4 md:px-8 bg-white min-h-screen">
       <div className="max-w-4xl mx-auto">
         {volunteerJob.image_path && (
-          <div className="w-full h-64 md:h-96 relative mb-8 rounded-xl">
-            <Image
-              src={volunteerJob.image_path}
-              alt={volunteerJob.title}
-              fill
-              className="object-contain bg-white-100 rounded-lg"
-              priority
-            />
+          <div className="max-w-5xl mx-auto mb-8">
+            <div className="w-full h-64 md:h-96 relative rounded-lg overflow-hidden">
+              <Image
+                src={volunteerJob.image_path}
+                alt={volunteerJob.title}
+                fill
+                className="object-cover bg-white"
+                priority
+              />
+            </div>
           </div>
         )}
         <h1 className="text-3xl md:text-4xl font-bold text-[#F15D69] mb-4">
@@ -52,9 +54,11 @@ export default async function VolunteerJobDetail({
         <p className="text-sm text-gray-400 mb-6">
           {new Date(volunteerJob.date).toDateString()}
         </p>
-        <p className="text-gray-700 leading-7 whitespace-pre-line">
-          {volunteerJob.content}
-        </p>
+        {/* ✅ Render Quill HTML safely */}
+        <div
+          className="prose prose-lg max-w-none text-gray-700 blog-content"
+          dangerouslySetInnerHTML={{ __html: volunteerJob.content }}
+        />
         {/* Apply Button */}
         <div className="flex justify-center md:justify-start">
           <a

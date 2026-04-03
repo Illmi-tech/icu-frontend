@@ -4,7 +4,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-export default function DIGITSGALS() {
+export default function DIGITGALS() {
   return (
     <div className="px-6 md:px-16 py-12 bg-gray-50 min-h-screen">
       {/* Header Section */}
@@ -18,7 +18,7 @@ export default function DIGITSGALS() {
           className="text-3xl md:text-5xl font-bold mb-4"
           style={{ color: "#FDBB3E" }}
         >
-          DIGITSGALS
+          DIGITGALS
         </h1>
         <p className="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto">
           Closing the digital divide for girls in secondary schools
@@ -34,7 +34,7 @@ export default function DIGITSGALS() {
       >
         <Image
           src="/projects/digitgals/hero.webp"
-          alt="DIGITSGALS Hero"
+          alt="DIGITGALS Hero"
           fill
           className="object-cover"
           priority
@@ -51,7 +51,7 @@ export default function DIGITSGALS() {
       >
         <p>
           Technology shapes the future, yet girls in public schools remain
-          excluded from digital opportunities. DIGITSGALS, implemented in
+          excluded from digital opportunities. DIGITGALS, implemented in
           partnership with the National Information Technology Development
           Agency (NITDA), equips adolescent girls with digital literacy skills
           that expand their horizons and confidence.
@@ -75,7 +75,7 @@ export default function DIGITSGALS() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            "DIGITSGALS 1.0 trained 50 female students in core digital skills, while DIGITSGALS 2.0 scaled up to reach 100 participants.",
+            "DIGITGALS 1.0 trained 50 female students in core digital skills, while DIGITGALS 2.0 scaled up to reach 100 participants.",
             "Students learned online safety, content creation, and digital presentation skills over an intensive three-week training.",
             "The program has built a foundation for young girls to participate fully in the digital economy.",
           ].map((point, index) => (
@@ -120,7 +120,7 @@ export default function DIGITSGALS() {
             >
               <Image
                 src={`/projects/digitgals/${photo}.webp`}
-                alt={`DIGITSGALS Project ${index + 1}`}
+                alt={`DIGITGALS Project ${index + 1}`}
                 fill
                 className="object-cover"
               />

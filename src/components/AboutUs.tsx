@@ -24,7 +24,7 @@ export default function AboutUs() {
           className="text-gray-700 text-lg md:text-xl max-w-3xl mx-auto mb-10"
         >
           Illmi Children’s Fund (ICF) is a nonprofit organization committed to
-          bridging gaps in access to education and entrepreneurship — especially for
+          bridging gaps in access to education and entrepreneurship especially for
           women, girls, and marginalized communities. We advocate for inclusive policies
           and fight against all forms of gender-based violence in Nigeria.
         </motion.p>

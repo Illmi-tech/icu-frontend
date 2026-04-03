@@ -5,6 +5,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Spinner from "@/components/Spinner";
 import Link from "next/link";
+import RichTextEditor from "@/components/RichTextEditor";
+import sanitizeHtml from "sanitize-html";
 
 type Scholarship = {
   id: number;
@@ -13,6 +15,7 @@ type Scholarship = {
   slug: string;
   image_path?: string; // <-- updated
   imageFile?: File;
+  date?: string;
 };
 
 export default function AdminScholarshipsPage() {
@@ -21,6 +24,7 @@ export default function AdminScholarshipsPage() {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
+  const [preventDelete, setPreventDelete] = useState(false);
 
   useEffect(() => {
    const fetchScholarships = async () => {
@@ -54,6 +58,7 @@ export default function AdminScholarshipsPage() {
     return alert("Title and content are required");
   }
 
+  setPreventDelete(true);
   setLoading(true);
 
   const formDataToSend = new FormData();
@@ -94,6 +99,7 @@ export default function AdminScholarshipsPage() {
     alert("Something went wrong");
   }finally {
       setLoading(false); // stop loading
+      setPreventDelete(false);
     }
 };
 
@@ -128,6 +134,12 @@ export default function AdminScholarshipsPage() {
   }
 };
 
+const stripHtml = (html: string) => {
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  return div.textContent || div.innerText || "";
+};
+
 
   return (
     <div className="flex flex-col md:flex-row gap-6">
@@ -135,7 +147,7 @@ export default function AdminScholarshipsPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-xl shadow p-4 flex-1"
+        className="bg-white rounded-xl shadow p-4 flex-1 flex flex-col gap-4"
       >
         <h2 className="text-xl font-semibold mb-4">{editingId ? "Edit Scholarship" : "Create Scholarship"}</h2>
         
@@ -156,22 +168,40 @@ export default function AdminScholarshipsPage() {
           className="w-full border border-gray-300 rounded px-3 py-2 mb-3"
         />
 
-        <textarea
-          name="content"
-          placeholder="Scholarship content"
-          value={formState.content || ""}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded px-3 py-2 mb-3 h-32 resize-none"
-        />
+        {/* Rich text editor + button wrapper */}
+        <div className="flex flex-col gap-4 w-full">
+          <div className="relative w-full overflow-visible pb-2">
+            <div className="min-h-[300px] block w-full">
+              <RichTextEditor
+                value={formState.content || ""}
+                onChange={(val) => setFormState({ ...formState, content: val })}
+                folder="scholarships"
+                preventDelete={preventDelete}
+              />
+            </div>
+          </div>
 
-        <button
-          onClick={handleSubmit}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          disabled={loading}
-        >
-          {loading ? <Spinner size={2} color="#FFFFFF" /> : editingId ? "Update Scholarship" : "Create Scholarship"}
-          {loading && <span className="ml-2">Uploading...</span>}
-        </button>
+          {/* Reduced margin to bring button closer */}
+          <div className="self-start mt-2 clear-both relative z-10">
+            <button
+              onClick={handleSubmit}
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              disabled={loading || fetching}
+            >
+              {loading ? (
+                <>
+                  <Spinner size={2} color="#FFFFFF" />
+                  <span className="ml-2">Uploading...</span>
+                </>
+              ) : editingId ? (
+                "Update Scholarship"
+              ) : (
+                "Create Scholarship"
+              )}
+            </button>
+          </div>
+        </div>
+        
       </motion.div>
 
       {/* Right: Scholarship List */}
@@ -205,7 +235,14 @@ export default function AdminScholarshipsPage() {
                 )}
                 <div className="flex-1 flex flex-col justify-between">
                   <h3 className="font-semibold text-lg">{scholarship.title}</h3>
-                  <p className="text-gray-700 line-clamp-3">{scholarship.content}</p>
+                  <p
+                    className="text-gray-700 line-clamp-3"
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        sanitizeHtml(stripHtml(scholarship.content)).substring(0, 200) +
+                        "...",
+                    }}
+                  />
                   <div className="mt-2 flex gap-2">
                     <button
                       onClick={() => handleEdit(scholarship)}
