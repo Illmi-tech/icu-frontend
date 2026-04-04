@@ -17,8 +17,9 @@ model Admin {
   blogs          Blog[]
   careers        Career[]
   press_releases Press_release[]
-  reports        Report[]
-  scholarships   Scholarship[]
+  reports            Report[]
+  newsletter_issues  NewsletterIssue[]
+  scholarships       Scholarship[]
   volunteer_jobs Volunteer_Job[]
 
   @@map("admins")
@@ -113,6 +114,22 @@ model Report {
 
   @@index([admin_id], map: "reports_admin_id_fkey")
   @@map("reports")
+}
+
+model NewsletterIssue {
+  id         Int      @id @default(autoincrement())
+  title      String
+  image_path String?
+  image_id   String?
+  pdf_path   String
+  pdf_id     String
+  slug       String   @unique
+  date       DateTime @default(now())
+  admin_id   Int
+  admin      Admin    @relation(fields: [admin_id], references: [id])
+
+  @@index([admin_id], map: "newsletter_issues_admin_id_fkey")
+  @@map("newsletter_issues")
 }
 
 model Subscriber {

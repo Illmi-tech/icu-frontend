@@ -18,6 +18,7 @@ const menuItems = [
   { name: "Careers", href: "/admin/dashboard/careers" },
   { name: "Volunteer Jobs", href: "/admin/dashboard/volunteer-jobs" },
   { name: "Reports", href: "/admin/dashboard/reports" },
+  { name: "Newsletters", href: "/admin/dashboard/newsletter" },
   { name: "Press Release", href: "/admin/dashboard/press-releases" },
   { name: "Logout", href: "/admin/login" },
 ];

@@ -4,7 +4,6 @@ import OurStories from '@/components/OurStories';
 import Thematics from '@/components/Thematics';
 import OurPartners from '@/components/OurPartners';
 import Contact from '@/components/Contact';
-import Newsletter from '@/components/Newsletter';
 
 export default function Home() {
   return (
@@ -15,7 +14,6 @@ export default function Home() {
       <Thematics />
       <OurPartners />
       <Contact />
-      <Newsletter/>
     </>
   );
 }

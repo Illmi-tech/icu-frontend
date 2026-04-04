@@ -53,7 +53,8 @@ const navLinks = [
     children: [
       { label: "Blog Posts", href: "/resources/blogs" },
       { label: "Reports", href: "/resources/reports" },
-      { label: "Press Releases", href: "/resources/press-releases" }
+      { label: "Press Releases", href: "/resources/press-releases" },
+      { label: "Newsletter", href: "/resources/newsletter" },
     ],
   },
   
