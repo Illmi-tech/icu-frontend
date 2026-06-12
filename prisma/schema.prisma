@@ -36,7 +36,6 @@ model Blog {
   author_id  Int
   author     Admin    @relation(fields: [author_id], references: [id])
 
-  @@index([author_id], map: "blogs_author_id_fkey")
   @@map("blogs")
 }
 
@@ -51,7 +50,6 @@ model Career {
   admin_id   Int
   admin      Admin    @relation(fields: [admin_id], references: [id])
 
-  @@index([admin_id], map: "careers_admin_id_fkey")
   @@map("careers")
 }
 
@@ -66,7 +64,6 @@ model Volunteer_Job {
   admin_id   Int
   admin      Admin    @relation(fields: [admin_id], references: [id])
 
-  @@index([admin_id], map: "volunteer_jobs_admin_id_fkey")
   @@map("volunteer_jobs")
 }
 
@@ -81,7 +78,6 @@ model Scholarship {
   admin_id   Int
   admin      Admin    @relation(fields: [admin_id], references: [id])
 
-  @@index([admin_id], map: "scholarships_admin_id_fkey")
   @@map("scholarships")
 }
 
@@ -96,7 +92,6 @@ model Press_release {
   admin_id   Int
   admin      Admin    @relation(fields: [admin_id], references: [id])
 
-  @@index([admin_id], map: "press_releases_admin_id_fkey")
   @@map("press_releases")
 }
 
@@ -112,7 +107,6 @@ model Report {
   admin_id   Int
   admin      Admin    @relation(fields: [admin_id], references: [id])
 
-  @@index([admin_id], map: "reports_admin_id_fkey")
   @@map("reports")
 }
 
@@ -128,7 +122,6 @@ model NewsletterIssue {
   admin_id   Int
   admin      Admin    @relation(fields: [admin_id], references: [id])
 
-  @@index([admin_id], map: "newsletter_issues_admin_id_fkey")
   @@map("newsletter_issues")
 }
 

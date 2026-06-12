@@ -14,7 +14,7 @@ type Blog = {
   title: string;
   excerpt: string;
   content: string;
-  image_path: string;
+  image_path?: string | null;
   date: string;
 };
 
@@ -74,15 +74,17 @@ export default function BlogsPage() {
                 className="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition"
               >
                 <Link href={`/resources/blogs/${blog.slug}`}>
-                  <Image
-                    src={blog.image_path}
-                    alt={blog.title}
-                    width={600}
-                    height={224}
-                    className="w-full h-56 object-cover"
-                    placeholder="blur"
-                    blurDataURL="/placeholder.jpg" // Optional
-                  />
+                  {blog.image_path && (
+                    <Image
+                      src={blog.image_path}
+                      alt={blog.title}
+                      width={600}
+                      height={224}
+                      className="w-full h-56 object-cover"
+                      placeholder="blur"
+                      blurDataURL="/placeholder.jpg"
+                    />
+                  )}
                   <div className="p-5">
                     <h3 className="text-xl font-semibold text-[#53CAE9]">
                       {blog.title}
