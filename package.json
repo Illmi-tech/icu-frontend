@@ -7,11 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "import:mysql-dump": "node scripts/import-mysql-dump.mjs"
+    "import:mysql-dump": "node scripts/import-mysql-dump.mjs",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
     "@prisma/client": "^6.16.1",
+    "@tailwindcss/postcss": "^4",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.7.0",
     "clsx": "^2.1.1",
@@ -28,17 +30,16 @@
     "react-intersection-observer": "^9.16.0",
     "react-quill-new": "^3.6.0",
     "sanitize-html": "^2.17.0",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
     "@types/nodemailer": "^7.0.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/sanitize-html": "^2.16.0",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "@types/sanitize-html": "^2.16.0"
   }
 }
