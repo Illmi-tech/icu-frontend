@@ -28,7 +28,7 @@
     "jose": "^6.0.13",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.513.0",
-    "next": "15.3.3",
+    "next": "^15.5.19",
     "nodemailer": "^7.0.6",
     "prisma": "^6.14.0",
     "react": "^19.0.0",
