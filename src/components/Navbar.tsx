@@ -58,6 +58,7 @@ const navLinks = [
     ],
   },
   
+  { label: "Get a Seat", href: "/get-a-seat" },
   { label: "Donate", href: "/donate" },
   { label: "Contact", href: "/contact" },
 ];
@@ -90,12 +91,12 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-        <Link href="/">
+        <Link href="/" className="shrink-0">
           <img src="/logo/new-logo.jpg" alt="ICF Logo" className="h-10 w-auto" />
         </Link>
 
         {/* ===== Desktop Navigation ===== */}
-        <nav className="hidden md:flex gap-6">
+        <nav className="hidden lg:flex items-center gap-3 xl:gap-5 ml-20">
           {navLinks.map((link) =>
             link.children ? (
               <div
@@ -104,7 +105,7 @@ export default function Navbar() {
                 onMouseEnter={() => handleMouseEnter(link.href)}
                 onMouseLeave={handleMouseLeave}
               >
-                <button className="flex items-center text-black font-medium hover:text-[#53CAE9] transition">
+                <button className="flex items-center whitespace-nowrap text-[13px] xl:text-[15px] text-black font-medium hover:text-[#53CAE9] transition">
                   {link.label}
                   <ChevronDown className="ml-1 w-4 h-4" />
                 </button>
@@ -136,7 +137,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-black font-medium hover:text-[#53CAE9] transition"
+                className="whitespace-nowrap text-[13px] xl:text-[15px] text-black font-medium hover:text-[#53CAE9] transition"
               >
                 {link.label}
               </Link>
@@ -146,7 +147,7 @@ export default function Navbar() {
 
         {/* ===== Mobile Menu Toggle ===== */}
         <button
-          className="md:hidden"
+          className="lg:hidden"
           onClick={() => setIsOpen((prev) => !prev)}
         >
           {isOpen ? <X /> : <Menu />}
@@ -161,7 +162,7 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-white shadow-md px-4 py-3 space-y-3 
+            className="lg:hidden bg-white shadow-md px-4 py-3 space-y-3 
                        max-h-[80vh] overflow-y-auto"
           >
             {navLinks.map((link) =>

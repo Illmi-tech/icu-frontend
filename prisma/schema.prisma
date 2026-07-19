@@ -133,3 +133,14 @@ model Subscriber {
   @@map("subscribers")
 }
 
+model Seat {
+  id        Int      @id @default(autoincrement())
+  row       Int
+  column    Int
+  full_name String
+  paid_at   DateTime @default(now())
+
+  @@unique([row, column])
+  @@map("seats")
+}
+
