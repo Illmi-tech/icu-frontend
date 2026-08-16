@@ -1,9 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { User, BookOpen, Heart, GraduationCap } from "lucide-react";
+import {
+  User,
+  BookOpen,
+  Heart,
+  GraduationCap,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import Spinner from "@/components/Spinner";
+
+// Landscape campaign photos — drop the files in public/get-a-seat/
+const slides = [
+  "/get-a-seat/slide1.webp",
+  "/get-a-seat/slide2.webp",
+  "/get-a-seat/slide3.webp",
+  "/get-a-seat/slide4.webp",
+  "/get-a-seat/slide5.webp",
+];
 
 const walkForGroups = [
   {
@@ -62,6 +79,18 @@ export default function GetASeatPage() {
   const [paying, setPaying] = useState(false);
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+
+  const [slideIndex, setSlideIndex] = useState(0);
+
+  const nextSlide = () => setSlideIndex((prev) => (prev + 1) % slides.length);
+  const prevSlide = () =>
+    setSlideIndex((prev) => (prev - 1 + slides.length) % slides.length);
+
+  // Auto-advance the campaign photos
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const fetchSeats = async () => {
@@ -185,8 +214,143 @@ export default function GetASeatPage() {
   const total = selected.size * price;
 
   return (
-    <section className="py-16 px-4 md:px-8 bg-[#F9F8F3] min-h-screen">
-      <div className="max-w-4xl mx-auto">
+    <section className="bg-[#F9F8F3] min-h-screen">
+      {/* Walk in Their Shoes banner */}
+      <div className="relative overflow-hidden bg-[#0B1F3A]">
+        <div
+          className="absolute inset-0 opacity-[0.18]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 15% 20%, #C9A227 0%, transparent 45%), radial-gradient(circle at 85% 80%, #53CAE9 0%, transparent 45%)",
+          }}
+        />
+        <div className="relative max-w-4xl mx-auto px-4 md:px-8 py-16 md:py-24 text-center">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-xs md:text-sm font-semibold tracking-[0.2em] uppercase text-[#C9A227] mb-4"
+          >
+            ICF Campaign {"\u00B7"} Since 2022
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-3xl sm:text-4xl md:text-6xl font-bold text-white leading-tight"
+          >
+            Walk in Their Shoes
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-4 text-base md:text-xl text-gray-200 max-w-2xl mx-auto"
+          >
+            Restoring access to learning for out-of-school children across
+            Nigeria — one sponsored seat at a time.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="mt-8 h-1 w-24 mx-auto rounded-full bg-[#C9A227]"
+          />
+        </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto py-16 px-4 md:px-8">
+        {/* Campaign introduction */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-16 space-y-5 text-base md:text-lg text-gray-700 leading-relaxed"
+        >
+          <p>
+            <span className="font-semibold text-[#0B1F3A]">
+              Walk In Their Shoes
+            </span>
+            , launched in 2022, is a nationwide initiative restoring access to
+            learning for out-of-school children in Nigeria. Since inception,
+            over 500 children have received full sponsorship from basic to
+            tertiary education.
+          </p>
+          <p>
+            Support covers tuition, learning materials, and feeding, removing
+            critical barriers to access.
+          </p>
+          <p>
+            Through a transparent digital crowdfunding model, we connect
+            individuals and organisations directly to children in need.
+          </p>
+        </motion.div>
+
+        {/* Campaign photo slideshow */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-20"
+        >
+          <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-gray-200 shadow">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={slideIndex}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.8 }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={slides[slideIndex]}
+                  alt={`Walk in Their Shoes photo ${slideIndex + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 896px"
+                  className="object-cover"
+                  priority={slideIndex === 0}
+                />
+              </motion.div>
+            </AnimatePresence>
+
+            <button
+              type="button"
+              onClick={prevSlide}
+              aria-label="Previous photo"
+              className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white backdrop-blur-sm transition hover:bg-black/60"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              type="button"
+              onClick={nextSlide}
+              aria-label="Next photo"
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white backdrop-blur-sm transition hover:bg-black/60"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+
+            <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2">
+              {slides.map((slide, index) => (
+                <button
+                  key={slide}
+                  type="button"
+                  onClick={() => setSlideIndex(index)}
+                  aria-label={`Go to photo ${index + 1}`}
+                  className={`h-2 rounded-full transition-all ${
+                    index === slideIndex
+                      ? "w-6 bg-[#C9A227]"
+                      : "w-2 bg-white/70 hover:bg-white"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
