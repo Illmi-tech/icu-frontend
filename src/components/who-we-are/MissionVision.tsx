@@ -23,7 +23,10 @@ export default function MissionVision() {
           >
             <h3 className="text-xl font-semibold text-[#53CAE9] mb-3">Mission</h3>
             <p>
-              To explore innovative solutions that will transform communities through improved equity and excellence.
+              We strengthen education systems that empower every child to thrive by
+              advancing equitable opportunities through strategic partnerships,
+              evidence-based solutions, policy advocacy, and capacity strengthening,
+              fostering safe, inclusive, and sustainable communities.
             </p>
           </motion.div>
           <motion.div
@@ -34,7 +37,10 @@ export default function MissionVision() {
           >
             <h3 className="text-xl font-semibold text-[#53CAE9] mb-3">Vision</h3>
             <p>
-              To secure the right to education and a life free from violence for less privileged children in Nigeria.
+              A Society where strong education systems and empowered communities
+              enable children access to quality education, reach their full
+              potential, thrive and contribute to sustainable transformation by
+              2035.
             </p>
           </motion.div>
         </div>

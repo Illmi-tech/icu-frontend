@@ -30,7 +30,7 @@ export default function AboutUs() {
         </motion.p>
 
         {/* Mission, Vision, Values Cards */}
-        <div className="grid gap-8 md:grid-cols-3 mt-8">
+        <div className="grid gap-8 md:grid-cols-2 mt-8">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -40,8 +40,10 @@ export default function AboutUs() {
             <Lightbulb className="w-10 h-10 mb-4" />
             <h3 className="text-xl font-semibold mb-2">Our Mission</h3>
             <p>
-              To explore innovative solutions that will transform communities
-              through improved equity and excellence.
+              We strengthen education systems that empower every child to thrive by
+              advancing equitable opportunities through strategic partnerships,
+              evidence-based solutions, policy advocacy, and capacity strengthening,
+              fostering safe, inclusive, and sustainable communities.
             </p>
           </motion.div>
 
@@ -54,26 +56,56 @@ export default function AboutUs() {
             <Target className="w-10 h-10 mb-4" />
             <h3 className="text-xl font-semibold mb-2">Our Vision</h3>
             <p>
-              To secure the right to education and a life free from violence
-              for less privileged children in Nigeria.
+              A Society where strong education systems and empowered communities
+              enable children access to quality education, reach their full
+              potential, thrive and contribute to sustainable transformation by
+              2035.
             </p>
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="bg-[#F15D69] text-white rounded-2xl p-6 shadow-md hover:scale-105 transition-transform"
-          >
-            <HeartHandshake className="w-10 h-10 mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Our Values</h3>
-            <ul className="list-disc pl-5 text-left space-y-1">
-              <li>Integrity</li>
-              <li>Inclusion</li>
-              <li>Impact</li>
-            </ul>
-          </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="mt-8 bg-[#F15D69] text-white rounded-2xl p-6 md:p-8 shadow-md text-left"
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <HeartHandshake className="w-10 h-10 shrink-0" />
+            <h3 className="text-xl font-semibold">Our Values</h3>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2">
+            <div>
+              <p className="font-semibold mb-1">People First</p>
+              <p className="text-white/95 text-sm leading-relaxed">
+                We place the dignity, wellbeing, and potential of people at the
+                heart of everything we do.
+              </p>
+            </div>
+            <div>
+              <p className="font-semibold mb-1">Inclusion</p>
+              <p className="text-white/95 text-sm leading-relaxed">
+                We embrace diversity, challenge exclusion, and work to ensure
+                everyone has a fair opportunity to thrive.
+              </p>
+            </div>
+            <div>
+              <p className="font-semibold mb-1">Integrity</p>
+              <p className="text-white/95 text-sm leading-relaxed">
+                We act with honesty, transparency, and responsibility, holding
+                ourselves accountable for our decisions, commitments, and impact.
+              </p>
+            </div>
+            <div>
+              <p className="font-semibold mb-1">Collaboration</p>
+              <p className="text-white/95 text-sm leading-relaxed">
+                We believe lasting change is built together. We listen, build
+                meaningful partnerships, and value diverse perspectives and
+                collective action.
+              </p>
+            </div>
+          </div>
+        </motion.div>
         {/* Learn More Button */}
         <motion.div
           initial={{ opacity: 0 }}
