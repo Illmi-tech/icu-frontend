@@ -13,6 +13,8 @@ interface SidebarProps {
 
 const menuItems = [
   { name: "Overview", href: "/admin/dashboard" },
+  { name: "Sponsor Notifications", href: "/admin/dashboard/notifications" },
+  { name: "Sponsors", href: "/admin/dashboard/sponsors" },
   { name: "Blogs", href: "/admin/dashboard/blogs" },
   { name: "Scholarships", href: "/admin/dashboard/scholarships" },
   { name: "Careers", href: "/admin/dashboard/careers" },

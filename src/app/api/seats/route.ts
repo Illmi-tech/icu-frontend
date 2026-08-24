@@ -81,8 +81,19 @@ export async function POST(req: NextRequest) {
       skipDuplicates: true,
     });
 
+    const amount = seats.length * SEAT_PRICE;
+
+    await prisma.sponsor.create({
+      data: {
+        category: "seat",
+        amount,
+        full_name: fullName,
+        seats_count: seats.length,
+      },
+    });
+
     return NextResponse.json(
-      { success: true, amount: seats.length * SEAT_PRICE },
+      { success: true, amount },
       { status: 201 }
     );
   } catch (error) {
