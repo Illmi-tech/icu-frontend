@@ -75,27 +75,27 @@ const individualOptions = [
 
 const walkForGroups = [
   {
-    title: "The girl child",
+    title: "The Girl Child",
     description:
-      "Girls pushed out of school by poverty, early marriage, or family duties — the most displaced group in our context.",
+      "For many girls, poverty, early marriage and family responsibilities can stand between them and the classroom. When a girl leaves school, she loses access to learning, opportunity and the chance to shape her own future.",
     Icon: User,
   },
   {
-    title: "Almajiri kids",
+    title: "Almajiri Kids",
     description:
-      "Children in informal Qur'anic education with limited access to formal schooling or a path to self-sufficiency.",
+      "Many Almajiri children have limited access to formal education and the skills needed to build sustainable futures. Their empty seats represent children who deserve greater access to learning and opportunity.",
     Icon: BookOpen,
   },
   {
-    title: "Displaced children",
+    title: "Displaced Children",
     description:
-      "Children in IDP camps and conflict-affected communities whose classrooms, safety, and routines have been stripped away.",
+      "For children affected by conflict and displacement, education can be interrupted overnight. Classrooms disappear, families are uprooted and routines are broken. Access to education can provide stability, protection and a pathway towards a better future.",
     Icon: Heart,
   },
   {
-    title: "Out-of-school adolescents",
+    title: "Out of School Adolescents",
     description:
-      "Young people who never started or were forced to stop — waiting for a seat, a scholarship, and a second chance to finish.",
+      "Some young people never had the opportunity to start school. Others were forced to leave before completing their education. Their education does not have to end there. With the right support, they can return to learning, complete their education and move forward.",
     Icon: GraduationCap,
   },
 ];
