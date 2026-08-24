@@ -70,7 +70,7 @@ export default function AboutUs() {
           transition={{ delay: 0.2, duration: 0.5 }}
           className="mt-8 bg-[#F15D69] text-white rounded-2xl p-6 md:p-8 shadow-md text-left"
         >
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center justify-center gap-3 mb-6">
             <HeartHandshake className="w-10 h-10 shrink-0" />
             <h3 className="text-xl font-semibold">Our Values</h3>
           </div>

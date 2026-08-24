@@ -918,9 +918,13 @@ export default function GetASeatPage() {
             </p>
           )}
 
-          <div className="grid md:grid-cols-2 gap-5 md:gap-6 items-start">
+          <div
+            className={`grid md:grid-cols-2 gap-5 md:gap-6 ${
+              csrExpanded ? "md:items-start" : "md:items-stretch"
+            }`}
+          >
             {/* Corporate */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden h-full flex flex-col">
               <div className="flex items-center gap-3 px-5 md:px-6 py-5 border-b border-gray-100 bg-[#0B1F3A]">
                 <div className="w-10 h-10 rounded-lg bg-[#C9A227]/15 flex items-center justify-center">
                   <Building2 className="w-5 h-5 text-[#C9A227]" strokeWidth={2} />
@@ -933,7 +937,7 @@ export default function GetASeatPage() {
                 </div>
               </div>
 
-              <ul className="p-3 md:p-4 space-y-1.5">
+              <ul className="p-3 md:p-4 space-y-1.5 flex-1">
                 <li>
                   <button
                     type="button"
@@ -981,7 +985,7 @@ export default function GetASeatPage() {
                 </li>
               </ul>
 
-              <div className="px-3 md:px-4 pb-4">
+              <div className="px-3 md:px-4 pb-4 mt-auto">
                 <button
                   type="button"
                   onClick={() => openCorporatePayment()}
@@ -1002,7 +1006,7 @@ export default function GetASeatPage() {
             </div>
 
             {/* Individual Donation */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden h-full flex flex-col">
               <div className="flex items-center gap-3 px-5 md:px-6 py-5 border-b border-gray-100 bg-[#0B1F3A]">
                 <div className="w-10 h-10 rounded-lg bg-[#C9A227]/15 flex items-center justify-center">
                   <HandHeart className="w-5 h-5 text-[#C9A227]" strokeWidth={2} />
@@ -1017,9 +1021,9 @@ export default function GetASeatPage() {
                 </div>
               </div>
 
-              <ul className="p-3 md:p-4 space-y-1.5">
+              <ul className="p-3 md:p-4 space-y-1.5 flex-1 flex flex-col">
                 {individualOptions.map((option) => (
-                  <li key={option.id}>
+                  <li key={option.id} className="flex-1">
                     <button
                       type="button"
                       onClick={
@@ -1027,7 +1031,7 @@ export default function GetASeatPage() {
                           ? openSchoolDayPayment
                           : openHappinessPayment
                       }
-                      className="group flex w-full items-start justify-between gap-3 rounded-xl px-4 py-4 text-left text-[#0B1F3A] hover:bg-[#F0EEE6] transition"
+                      className="group flex h-full w-full items-start justify-between gap-3 rounded-xl px-4 py-4 text-left text-[#0B1F3A] hover:bg-[#F0EEE6] transition"
                     >
                       <div>
                         <p className="font-semibold">{option.title}</p>
