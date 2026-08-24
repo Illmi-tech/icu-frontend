@@ -1044,87 +1044,6 @@ export default function GetASeatPage() {
           </div>
         </motion.div>
 
-        {/* Three ways to give */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mt-20 bg-[#0B1F3A] rounded-2xl p-6 md:p-10"
-        >
-          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#C9A227] mb-3">
-            Three ways to give
-          </p>
-          <h3 className="text-2xl md:text-4xl font-bold text-[#C9A227] mb-3">
-            Pick the arm that fits how you give
-          </h3>
-          <p className="text-gray-300 mb-8 max-w-2xl">
-            Every option leads to the same outcome: a child&apos;s seat filled.
-            Choose the giving style that works for you.
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-4 md:gap-5">
-            <div className="bg-white/5 border border-white/10 rounded-xl p-5 md:p-6 flex flex-col">
-              <p className="text-xs font-semibold tracking-[0.15em] uppercase text-gray-300 mb-4">
-                Arm 1 &middot; Everyday giving
-              </p>
-              <h4 className="font-bold text-white text-lg mb-2">
-                Buy a school day
-              </h4>
-              <p className="text-sm text-gray-300 leading-relaxed mb-6">
-                Break sponsorship into daily units. Give {"\u20A6"}1,000 and see
-                exactly what it buys — one funded school day for one named
-                child.
-              </p>
-              <button
-                onClick={openSchoolDayPayment}
-                className="mt-auto self-start bg-[#C9A227] text-[#0B1F3A] text-sm font-bold px-5 py-2.5 rounded-md hover:bg-[#e0b52e] transition"
-              >
-                {"\u20A6"}1,000 / day
-              </button>
-            </div>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-5 md:p-6 flex flex-col">
-              <p className="text-xs font-semibold tracking-[0.15em] uppercase text-gray-300 mb-4">
-                Arm 2 &middot; Peer-to-peer
-              </p>
-              <h4 className="font-bold text-white text-lg mb-2">
-                Donate your birthday
-              </h4>
-              <p className="text-sm text-gray-300 leading-relaxed mb-6">
-                Ask friends and family to give to a child&apos;s education
-                instead of sending you gifts. One supporter can reach 50+ new
-                donors.
-              </p>
-              <a
-                href="/contact"
-                className="mt-auto self-start border border-[#C9A227] text-[#C9A227] text-sm font-bold px-5 py-2.5 rounded-md hover:bg-[#C9A227] hover:text-[#0B1F3A] transition"
-              >
-                Create your page {"\u2192"}
-              </a>
-            </div>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-5 md:p-6 flex flex-col">
-              <p className="text-xs font-semibold tracking-[0.15em] uppercase text-gray-300 mb-4">
-                Arm 3 &middot; Moment-based
-              </p>
-              <h4 className="font-bold text-white text-lg mb-2">
-                Do more with happiness
-              </h4>
-              <p className="text-sm text-gray-300 leading-relaxed mb-6">
-                Promotion. New baby. Exam results. Convert your good news into
-                a school day for a child who needs one.
-              </p>
-              <button
-                type="button"
-                onClick={openHappinessPayment}
-                className="mt-auto self-start border border-[#C9A227] text-[#C9A227] text-sm font-bold px-5 py-2.5 rounded-md hover:bg-[#C9A227] hover:text-[#0B1F3A] transition"
-              >
-                Share your moment {"\u2192"}
-              </button>
-            </div>
-          </div>
-        </motion.div>
-
         {/* Two pathways */}
         <div className="mt-20">
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#C9A227] mb-3">
@@ -1202,7 +1121,7 @@ export default function GetASeatPage() {
         </motion.div>
       </div>
 
-      {/* Payment modal (simulated) */}
+      {/* Payment modal */}
       <AnimatePresence>
         {showPayment && (
           <motion.div
@@ -1224,7 +1143,7 @@ export default function GetASeatPage() {
               </h3>
               <p className="text-sm text-gray-500 mb-5">
                 {selected.size} seat{selected.size > 1 ? "s" : ""} — {"\u20A6"}
-                {total.toLocaleString()} (simulated payment, no real charge)
+                {total.toLocaleString()}
               </p>
 
               <form onSubmit={handlePay} className="space-y-4">
@@ -1317,7 +1236,7 @@ export default function GetASeatPage() {
         )}
       </AnimatePresence>
 
-      {/* Corporate Paystack modal (simulated) */}
+      {/* Corporate Paystack modal */}
       <AnimatePresence>
         {showCorporatePayment && (
           <motion.div
@@ -1343,8 +1262,8 @@ export default function GetASeatPage() {
                   </h3>
                   <p className="text-sm text-gray-500 mt-1">
                     {isCustomCorporateAmount
-                      ? "Enter any amount — simulated Paystack payment, no real charge"
-                      : `\u20A6${corporateAmount.toLocaleString()} — simulated Paystack payment, no real charge`}
+                      ? "Enter any amount to sponsor"
+                      : `\u20A6${corporateAmount.toLocaleString()}`}
                   </p>
                 </div>
                 <span className="shrink-0 rounded-md bg-[#0A2540] px-2.5 py-1 text-xs font-bold tracking-wide text-white">
@@ -1502,7 +1421,7 @@ export default function GetASeatPage() {
         )}
       </AnimatePresence>
 
-      {/* School day Paystack modal (simulated) */}
+      {/* School day Paystack modal */}
       <AnimatePresence>
         {showSchoolDayPayment && (
           <motion.div
@@ -1526,8 +1445,7 @@ export default function GetASeatPage() {
                   </h3>
                   <p className="text-sm text-gray-500 mt-1">
                     {"\u20A6"}
-                    {SCHOOL_DAY_PRICE.toLocaleString()} per day — simulated
-                    Paystack payment, no real charge
+                    {SCHOOL_DAY_PRICE.toLocaleString()} per day
                   </p>
                 </div>
                 <span className="shrink-0 rounded-md bg-[#0A2540] px-2.5 py-1 text-xs font-bold tracking-wide text-white">
@@ -1713,7 +1631,7 @@ export default function GetASeatPage() {
         )}
       </AnimatePresence>
 
-      {/* Do More With Happiness Paystack modal (simulated) */}
+      {/* Do More With Happiness Paystack modal */}
       <AnimatePresence>
         {showHappinessPayment && (
           <motion.div
@@ -1736,8 +1654,7 @@ export default function GetASeatPage() {
                     Do More With Happiness
                   </h3>
                   <p className="text-sm text-gray-500 mt-1">
-                    Celebrate by giving — simulated Paystack payment, no real
-                    charge
+                    Celebrate by giving
                   </p>
                 </div>
                 <span className="shrink-0 rounded-md bg-[#0A2540] px-2.5 py-1 text-xs font-bold tracking-wide text-white">
