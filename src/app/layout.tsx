@@ -1,9 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import RootContent from './RootContent';
-// import { usePathname } from "next/navigation";
-//import Navbar from '@/components/Navbar';
-// import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: 'Illmi Children’s Fund',
@@ -15,11 +12,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  
+  const maintenanceMode = process.env.MAINTENANCE_MODE === 'true';
+
   return (
     <html lang="en">
       <body className="bg-white text-black">
-        <RootContent>{children}</RootContent>
+        <RootContent hideChrome={maintenanceMode}>{children}</RootContent>
       </body>
     </html>
   );
