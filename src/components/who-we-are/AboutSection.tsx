@@ -14,7 +14,7 @@ export default function AboutSection() {
         >
           <h2 className="text-3xl md:text-4xl font-bold text-[#53CAE9] mb-4">Who We Are</h2>
           <p className="text-gray-700 leading-relaxed">
-            Founded in 2021, Illmi Children’s Fund (ICF) is a non-profit organization committed 
+            Founded in 2021, Illmi Children’s Foundation (ICF) is a non-profit organization committed 
             to bridging gaps in access to education and entrepreneurship, with a focus on empowering 
             marginalized communities, particularly women and girls. We work to advance policy advocacy 
             and combat all forms of gender-based violence.

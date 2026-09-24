@@ -32,7 +32,7 @@ export default function ContactPage() {
 
             <div className="flex items-center gap-4">
               <Mail className="text-[#F15D69] w-6 h-6" />
-              <span>info@illmichildrensfund.org</span>
+              <span>info@illmichildrensfoundation.org</span>
             </div>
 
             {/* Social Media Icons */}

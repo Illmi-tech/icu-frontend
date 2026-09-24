@@ -10,7 +10,7 @@ export default function Footer() {
         
         {/* Logo / About */}
         <div>
-          <h3 className="text-xl font-bold">Illmi Children’s Fund (ICF)</h3>
+          <h3 className="text-xl font-bold">Illmi Children’s Foundation (ICF)</h3>
           <p className="mt-3 text-gray-200 text-sm">
             Empowering marginalized communities through education, entrepreneurship, 
             and policy advocacy for a brighter future.
@@ -43,12 +43,12 @@ export default function Footer() {
             <a href="https://www.linkedin.com/company/illmi-children-s-fund-icf/" aria-label="LinkedIn" className="hover:text-[#FDBB3E]">
               <LinkedinLogoIcon size={20} />
             </a>
-            <a href="mailto:info@illmichildrenfund.org" className="hover:text-[#FDBB3E]">
+            <a href="mailto:info@illmichildrensfoundation.org" className="hover:text-[#FDBB3E]">
               <EnvelopeIcon size={20} />
             </a>
           </div>
           <p className="text-gray-200 text-sm">
-            © {new Date().getFullYear()} Illmi Children’s Fund. All rights reserved.
+            © {new Date().getFullYear()} Illmi Children’s Foundation. All rights reserved.
           </p>
         </div>
       </div>

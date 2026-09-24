@@ -92,7 +92,7 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         <Link href="/" className="shrink-0">
-          <img src="/logo/new-logo.jpg" alt="ICF Logo" className="h-10 w-auto" />
+          <img src="/logo/new-logo.png" alt="ICF Logo" className="h-10 w-auto" />
         </Link>
 
         {/* ===== Desktop Navigation ===== */}

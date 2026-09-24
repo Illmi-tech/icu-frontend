@@ -44,7 +44,7 @@ export default function Contact() {
           transition={{ delay: 0.2, duration: 0.5 }}
           className="text-gray-600 mt-4 max-w-2xl mx-auto"
         >
-          Have questions or want to collaborate with Illmi Children’s Fund (ICF)?
+          Have questions or want to collaborate with Illmi Children’s Foundation (ICF)?
           We’d love to hear from you. Reach out to us through any of the methods below.
         </motion.p>
       </div>
@@ -62,7 +62,7 @@ export default function Contact() {
         >
           <div className="flex items-center gap-3">
             <Mail className="text-[#F15D69]" />
-            <span className="text-gray-800">info@illmichildrensfund.org</span>
+            <span className="text-gray-800">info@illmichildrensfoundation.org</span>
           </div>
           <div className="flex items-center gap-3">
             <Phone className="text-[#FDBB3E]" />
@@ -147,7 +147,7 @@ export default function Contact() {
 //           transition={{ delay: 0.2, duration: 0.5 }}
 //           className="text-gray-600 mt-4 max-w-2xl mx-auto"
 //         >
-//           Have questions or want to collaborate with Illmi Children’s Fund (ICF)?
+//           Have questions or want to collaborate with Illmi Children’s Foundation (ICF)?
 //           We’d love to hear from you. Reach out to us through any of the methods below.
 //         </motion.p>
 //       </div>
@@ -162,7 +162,7 @@ export default function Contact() {
 //         >
 //           <div className="flex items-center gap-3">
 //             <Mail className="text-[#F15D69]" />
-//             <span className="text-gray-800">info@illmichildrensfund.org</span>
+//             <span className="text-gray-800">info@illmichildrensfoundation.org</span>
 //           </div>
 //           <div className="flex items-center gap-3">
 //             <Phone className="text-[#FDBB3E]" />

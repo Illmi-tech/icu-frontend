@@ -36,7 +36,7 @@ export default function IWDPage() {
         >
           <p className="text-lg leading-relaxed text-gray-800">
             On <span className="font-semibold">March 7, 2025</span>, Illmi
-            Children’s Fund (ICF) hosted a successful virtual webinar in honor
+            Children’s Foundation (ICF) hosted a successful virtual webinar in honor
             of International Women’s Day. The event featured engaging
             discussions on gender equality, digital inclusion, and STEM
             opportunities, led by esteemed speakers{" "}

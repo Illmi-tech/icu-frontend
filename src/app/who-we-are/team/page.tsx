@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const boardOfTrustees = [
-  { name: "Mrs. Maryam Augie Abdulmumin", role: "Founder/Executive Director ICF", img: "/who-we-are/team/photo1.webp" },
+  { name: "Mrs. Maryam Augie Abdulmumin", role: 'Founder "Illmi Childrens Foundation"', img: "/who-we-are/team/photo1.webp" },
   { name: "Hon. Justice Aminu Augie", role: "CFR, Justice of the Supreme Court of Nigeria (RTD)", img: "/who-we-are/team/photo2.webp" },
   { name: "Dr. Shehu Yahaya", role: "Chairman, Board of Directors of Development Bank of Nigeria Plc (DBN)", img: "/who-we-are/team/photo3.webp" },
   { name: "Ms. Amina Wali-Shafeeq", role: "Development Consultant", img: "/who-we-are/team/photo4.webp" },
