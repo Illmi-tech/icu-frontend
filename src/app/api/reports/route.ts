@@ -3,22 +3,32 @@ import prisma from "@/lib/server/prisma";
 import cloudinary from "@/lib/server/cloudinary";
 import { UploadApiResponse } from "cloudinary";
 import { getDecodedToken, generateSlug, logError } from "@/lib/server/utils";
+import { deletePdf, getPdfPublicUrl, isValidPdfPath, pdfExists } from "@/lib/server/supabase-storage";
 
 export async function POST(req: NextRequest) {
+  let pdfPath: string | undefined;
+  let created = false;
   try {
     const tokenData = await getDecodedToken();
     if (!tokenData)
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ message: "Your session has expired. Please log in again." }, { status: 401 });
 
     const formData = await req.formData();
     const title = formData.get("title")?.toString();
     const adminId = tokenData.id;
     const imageFile = formData.get("image") as File | null;
-    const pdfFile = formData.get("pdf") as File | null;
+    pdfPath = formData.get("pdfPath")?.toString();
 
-    if (!title || !adminId || !pdfFile) {
+    if (!title || !adminId || !pdfPath) {
       return NextResponse.json(
-        { message: "Missing required fields" },
+        { message: "Title and PDF are required" },
+        { status: 400 }
+      );
+    }
+
+    if (!isValidPdfPath(pdfPath, "reports") || !(await pdfExists(pdfPath))) {
+      return NextResponse.json(
+        { message: "The PDF upload could not be found. Please upload it again." },
         { status: 400 }
       );
     }
@@ -53,32 +63,9 @@ export async function POST(req: NextRequest) {
       image_id = uploadResult.public_id;   // Cloudinary public ID
     }
 
-    // Handle PDF upload (required)
-    let pdf_path: string;
-    let pdf_id: string | null = null;
-    {
-      const buffer = Buffer.from(await pdfFile.arrayBuffer());
-
-      // Upload to Cloudinary
-      const uploadPdfResult = await new Promise<UploadApiResponse>((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream(
-          {
-            folder: "reports/pdfs",                // Cloudinary folder
-            resource_type: "raw",                 // for non-image files
-            format: "pdf",
-          },
-          (error, result) => {
-            if (error) reject(error);
-            else resolve(result as UploadApiResponse);
-          }
-        );
-        stream.end(buffer);
-      });
-
-      pdf_path = uploadPdfResult.secure_url; // Cloudinary URL
-      pdf_id = uploadPdfResult.public_id;   // Cloudinary public ID
-      
-    }
+    // PDF is uploaded by the browser straight to Supabase Storage
+    const pdf_path = getPdfPublicUrl(pdfPath);
+    const pdf_id = pdfPath;
 
     // Generate a unique slug
     let slug: string;
@@ -100,12 +87,16 @@ export async function POST(req: NextRequest) {
         slug,
       },
     });
+    created = true;
 
     return NextResponse.json(report, { status: 201 });
   } catch (error) {
     console.error("Error creating report:", error);
     logError(error);
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    if (pdfPath && !created && isValidPdfPath(pdfPath, "reports")) {
+      await deletePdf(pdfPath).catch(logError);
+    }
+    return NextResponse.json({ message: "Server error while saving the report. Please try again." }, { status: 500 });
   }
 }
 

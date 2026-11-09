@@ -16,11 +16,49 @@ type Report = {
   pdfFile?: File;
 };
 
+const MB = 1024 * 1024;
+const MAX_PDF_BYTES = 50 * MB;
+// Vercel rejects request bodies over 4.5 MB, and the thumbnail still goes through the API.
+const MAX_IMAGE_BYTES = 4 * MB;
+
+const formatMB = (bytes: number) => `${(bytes / MB).toFixed(1)} MB`;
+
+async function readErrorMessage(res: Response, fallback: string) {
+  if (res.status === 413) return "The file is too large to upload.";
+  if (res.status === 401) return "Your session has expired. Please log in again.";
+  try {
+    const data = await res.json();
+    return data.message || data.error || fallback;
+  } catch {
+    return `${fallback} (error ${res.status})`;
+  }
+}
+
+async function uploadPdf(file: File): Promise<string> {
+  const urlRes = await fetch("/api/reports/upload-url", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ fileName: file.name, fileType: file.type, fileSize: file.size }),
+  });
+  if (!urlRes.ok) throw new Error(await readErrorMessage(urlRes, "Could not prepare the PDF upload"));
+  const { uploadUrl, path } = await urlRes.json();
+
+  const body = new FormData();
+  body.append("cacheControl", "3600");
+  body.append("", file);
+  const uploadRes = await fetch(uploadUrl, { method: "PUT", body });
+  if (!uploadRes.ok) throw new Error(await readErrorMessage(uploadRes, "PDF upload failed"));
+
+  return path;
+}
+
 export default function AdminReportsPage() {
   const [reports, setReports] = useState<Report[]>([]);
   const [formState, setFormState] = useState<Partial<Report>>({});
   const [editingId, setEditingId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("");
   const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
@@ -65,17 +103,33 @@ export default function AdminReportsPage() {
     return alert("PDF file is required");
   }
 
-  setLoading(true);
+  const { imageFile, pdfFile } = formState;
+  if (imageFile && imageFile.size > MAX_IMAGE_BYTES) {
+    return alert(
+      `The thumbnail image is too large (${formatMB(imageFile.size)}). Please use an image under ${formatMB(MAX_IMAGE_BYTES)}.`
+    );
+  }
+  if (pdfFile && pdfFile.size > MAX_PDF_BYTES) {
+    return alert(
+      `The PDF is too large (${formatMB(pdfFile.size)}). The maximum is ${formatMB(MAX_PDF_BYTES)}. Please compress it and try again.`
+    );
+  }
 
-  const formDataToSend = new FormData();
-  formDataToSend.append("title", formState.title);
-  if (formState.imageFile) formDataToSend.append("image", formState.imageFile);
-  if (formState.pdfFile) formDataToSend.append("pdf", formState.pdfFile);
+  setLoading(true);
 
   const method = editingId ? "PUT" : "POST";
   const url = editingId ? `/api/reports/${editingId}` : "/api/reports";
 
   try {
+    const formDataToSend = new FormData();
+    formDataToSend.append("title", formState.title);
+    if (imageFile) formDataToSend.append("image", imageFile);
+    if (pdfFile) {
+      setStatus(`Uploading PDF (${formatMB(pdfFile.size)})...`);
+      formDataToSend.append("pdfPath", await uploadPdf(pdfFile));
+    }
+
+    setStatus("Saving report...");
     const res = await fetch(url, {
       method,
       body: formDataToSend,
@@ -83,8 +137,7 @@ export default function AdminReportsPage() {
     });
 
     if (!res.ok) {
-      const errorData = await res.json();
-      return alert(errorData.message || "Error creating report");
+      return alert(await readErrorMessage(res, editingId ? "Error updating report" : "Error creating report"));
     }
 
     const newReport = await res.json();
@@ -101,9 +154,10 @@ export default function AdminReportsPage() {
     setFormState({});
   } catch (error) {
     console.error("Error submitting report:", error);
-    alert("Something went wrong");
+    alert(error instanceof Error ? error.message : "Something went wrong");
   }finally {
       setLoading(false);
+      setStatus("");
     }
 };
 
@@ -180,7 +234,7 @@ export default function AdminReportsPage() {
           disabled={loading}
         >
           {loading ? <Spinner size={2} color="#FFFFFF" /> : editingId ? "Update Report" : "Create Report"}
-          {loading && <span className="ml-2">Uploading...</span>}
+          {loading && <span className="ml-2">{status || "Uploading..."}</span>}
         </button>
       </motion.div>
 

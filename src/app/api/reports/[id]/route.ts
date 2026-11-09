@@ -3,6 +3,19 @@ import prisma from "@/lib/server/prisma";
 import cloudinary from "@/lib/server/cloudinary";
 import { UploadApiResponse } from "cloudinary";
 import {getDecodedToken, logError} from "@/lib/server/utils";
+import {
+  deletePdf,
+  getPdfPublicUrl,
+  isSupabasePdfUrl,
+  isValidPdfPath,
+  pdfExists,
+} from "@/lib/server/supabase-storage";
+
+function deleteStoredPdf(pdf_path: string, pdf_id: string) {
+  return isSupabasePdfUrl(pdf_path)
+    ? deletePdf(pdf_id)
+    : cloudinary.uploader.destroy(pdf_id, { resource_type: "raw" });
+}
 
 // DELETE /api/reports/:id
 export async function DELETE(
@@ -31,7 +44,7 @@ export async function DELETE(
         ? cloudinary.uploader.destroy(report.image_id).catch(logError)
         : null,
       report.pdf_id
-        ? cloudinary.uploader.destroy(report.pdf_id, { resource_type: "raw" }).catch(logError)
+        ? deleteStoredPdf(report.pdf_path, report.pdf_id).catch(logError)
         : null,
     ]);
 
@@ -69,12 +82,19 @@ export async function PUT(
     const formData = await req.formData();
     const title = formData.get("title")?.toString();
     const imageFile = formData.get("image") as File | null;
-    const pdfFile = formData.get("pdf") as File | null;
+    const pdfPath = formData.get("pdfPath")?.toString();
+
+    if (pdfPath && (!isValidPdfPath(pdfPath, "reports") || !(await pdfExists(pdfPath)))) {
+      return NextResponse.json(
+        { message: "The PDF upload could not be found. Please upload it again." },
+        { status: 400 }
+      );
+    }
 
     let image_path: string | null = existingReport.image_path;
     let image_id: string | null = existingReport.image_id;
     let pdf_path: string = existingReport.pdf_path;
-    let pdf_id: string | null = existingReport.pdf_id;
+    let pdf_id: string = existingReport.pdf_id;
 
 
     // Handle image replacement
@@ -107,32 +127,13 @@ export async function PUT(
       image_id = uploadImageResult.public_id;   // Cloudinary public ID
     }
 
-    // Handle PDF replacement
-    if (pdfFile) {
-      const buffer = Buffer.from(await pdfFile.arrayBuffer());
-
-      //delete old pdf if exists
-      if(pdf_id){
-        await cloudinary.uploader.destroy(pdf_id, { resource_type: "raw" }).catch(logError);
+    // Handle PDF replacement (already uploaded by the browser to Supabase Storage)
+    if (pdfPath) {
+      if (pdf_id) {
+        await deleteStoredPdf(pdf_path, pdf_id).catch(logError);
       }
-
-      const uploadPdfResult = await new Promise<UploadApiResponse>((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream(
-          {
-            folder: "reports/pdfs",
-            resource_type: "raw",
-            format: "pdf",
-          },
-          (error, result) => {
-            if (error) reject(error);
-            else resolve(result as UploadApiResponse);
-          }
-        );
-        stream.end(buffer);
-      });
-
-      pdf_path = uploadPdfResult.secure_url;
-      pdf_id = uploadPdfResult.public_id;
+      pdf_path = getPdfPublicUrl(pdfPath);
+      pdf_id = pdfPath;
     }
 
     const updatedReport = await prisma.report.update({
@@ -150,7 +151,7 @@ export async function PUT(
   } catch (error) {
     console.error("Error updating report:", error);
     logError(error);
-    return NextResponse.json({ message: "Failed to update report" }, { status: 500 });
+    return NextResponse.json({ message: "Server error while updating the report. Please try again." }, { status: 500 });
   }
 }
 

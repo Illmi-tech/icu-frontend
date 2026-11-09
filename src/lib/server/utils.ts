@@ -50,7 +50,11 @@ export function logError(err: unknown) {
   }
 
   const message = `[${new Date().toISOString()}] ${details}\n`;
-  fs.appendFileSync(logFile, message, "utf8");
+  try {
+    fs.appendFileSync(logFile, message, "utf8");
+  } catch {
+    // Read-only filesystem on Vercel; console output still reaches the logs
+  }
 
   console.error(err);
 }
@@ -58,6 +62,10 @@ export function logError(err: unknown) {
 export function logInfo(msg: string) {
   const logFile = path.join(process.cwd(), "error.log");
   const message = `[${new Date().toISOString()}] INFO: ${msg}\n`;
-  fs.appendFileSync(logFile, message, "utf8");
+  try {
+    fs.appendFileSync(logFile, message, "utf8");
+  } catch {
+    // Read-only filesystem on Vercel
+  }
   console.log(msg);
 }
