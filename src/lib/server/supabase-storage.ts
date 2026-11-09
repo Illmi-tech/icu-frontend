@@ -53,10 +53,8 @@ export async function createPdfUploadUrl(folder: string) {
 
   let res = await request();
   if (!res.ok) {
-    const text = await res.text();
-    if (!/bucket not found/i.test(text)) {
-      throw new Error(`Failed to create upload URL: ${res.status} ${text}`);
-    }
+    // A missing bucket is reported inconsistently ("Bucket not found" or
+    // "The related resource does not exist"), so create it and retry once.
     await ensureBucket();
     res = await request();
     if (!res.ok) {
